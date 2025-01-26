@@ -1,0 +1,15 @@
+FROM node:latest
+
+WORKDIR /usr/src/app
+
+# copy both package.json and package-lock.json
+COPY package*.json ./
+
+# install dependencies
+RUN npm install -y
+
+# copy the api code to the image
+COPY . .
+
+# start the api server
+ENTRYPOINT ["npm", "start"]

@@ -1,0 +1,31 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    volumes:
+      - mongo-data:/data/db
+
+  api:
+    build:
+      context: ./ApiServer
+      dockerfile: Dockerfile.Api
+    depends_on:
+      - mongo
+    env_file:
+      - ./.env
+    ports:
+      - "${API_PORT}:${API_PORT}"
+
+  recommend:
+    build:
+      context: ./RecommendServer
+      dockerfile: Dockerfile.recommend
+    env_file:
+      - ./.env
+    command: ["${RECOMMEND_PORT}"]
+    volumes:
+      - user_data:/usr/targil3/user_data
+
+volumes:
+  mongo-data:
+  user_data:
