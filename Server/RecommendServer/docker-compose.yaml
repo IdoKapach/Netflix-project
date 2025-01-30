@@ -1,0 +1,43 @@
+services:
+  main:
+    build:
+      context: .
+      dockerfile: Dockerfile.main
+    volumes:
+      - user_data:/usr/targil2/user_data
+    networks:
+      - dockerNet
+    stdin_open: true
+    tty: true
+    command: ["8080"] # set the server port
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - test_data:/usr/targil1/test_data
+    stdin_open: true
+    tty: true
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    networks:
+      - dockerNet
+    # depends_on:
+    #   - main # wait for the main server to start
+    stdin_open: true
+    tty: true
+    command: ["main"] # set the server ip and port
+
+# volumes for persisting data
+volumes:
+  user_data:
+  test_data:
+
+networks:
+  # set up a bridge network (can only be accessed by containers in the same network)
+  dockerNet:
+    driver: bridge

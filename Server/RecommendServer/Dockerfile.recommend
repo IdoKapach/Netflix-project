@@ -1,0 +1,17 @@
+# Use an official GCC image as a parent image
+FROM gcc:latest
+
+# Install CMake
+RUN apt-get update && apt-get install -y cmake
+
+# Set the working directory in the container
+WORKDIR /usr/targil3
+
+# Copy the current directory contents into the container at /usr/targi3
+COPY . .
+
+# Create a build directory and build the project
+RUN mkdir -p build && cd build && cmake .. && make
+
+# Run the executable
+ENTRYPOINT ["./build/targil2"]

@@ -1,0 +1,7 @@
+FROM python:3
+
+WORKDIR /usr/targil2/client
+
+COPY ./src/client.py .
+
+ENTRYPOINT ["python3", "client.py"]
