@@ -1,17 +1,7 @@
 import movieServices from '../services/movie.js'
-import { authantication } from '../services/authantication.js';
-
 
 // function that responsible to create movie given name, video and categories arguments. this func demands for user authantication
 const createMovie = async (req, res) => {
-    // checks the authantication
-    try {
-        await authantication(req)
-    }
-    // if the authantication failed, throws exeption
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to create the new movie
     try {
         return res.json(await movieServices.createMovie(req.body.name, req.body.video, req.body.categories));
@@ -25,14 +15,6 @@ const createMovie = async (req, res) => {
 // function that responsible to change movie given it's Id and given name, video and categories arguments for update.
 //  this func demands for user authantication
 const changeMovie = async (req, res) => {
-    // checks the authantication
-    try {
-        await authantication(req)
-    }
-    // if the authantication failed, throws exeption
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to create the new movie
     try {
         return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories));
@@ -50,13 +32,6 @@ const changeMovie = async (req, res) => {
 
 // deletes movie which was specified by it's Id. require authantication.
 const deleteMovie = async (req, res) => {
-    // checks authantication
-    try {
-        await authantication(req)
-    }
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to delete the movie
     try {
         const movie = await movieServices.deleteMovie(req.params.id);
@@ -70,14 +45,6 @@ const deleteMovie = async (req, res) => {
 
 // gets specific movie. requires authantication.
 const getMovie = async (req, res) => {
-    // checks the authantication
-    try {
-        await authantication(req)
-    }
-    // if the authantication failed, throws exeption
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     try {
         // gets the movie object by it's Id
         const movie = await movieServices.getMovieById(req.params.id);

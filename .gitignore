@@ -186,6 +186,8 @@ test_data
 .cxx
 local.properties
 
+# bruno tests
+Server/ApiServer/JWT_api_tests
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
