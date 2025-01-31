@@ -1,0 +1,150 @@
+{
+"Action":    [
+{
+    "id":1,
+    "name":"windows",
+    "categories": ["action", "drama"],
+    "img": "1.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":2,
+    "name":"goal",
+    "categories": ["action"],
+    "img": "2.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":3,
+    "name":"something",
+    "categories": ["action", "comedy", "drama"],
+    "img": "3.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":4,
+    "name":"ido",
+    "categories": ["comdey", "c1", "2c", "c3", "c4", "c5"],
+    "img": "4.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":5,
+    "name":"idii",
+    "categories": ["action"],
+    "img": "5.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":6,
+    "name":"nice",
+    "categories": ["action", "2c","c1"],
+    "img": "6.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":7,
+    "name":"wow",
+    "categories": ["action", "comedy","c1", "drama"],
+    "img": "7.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":8,
+    "name":"deskdeskdesk",
+    "categories": ["action", "comedy","c1", "drama", "horror"],
+    "img": "8.png",
+    "video": "1.mp4"
+}
+],
+"Comedy": [
+{
+    "id":1,
+    "name":"windows",
+    "categories": ["action", "drama"],
+    "img": "1.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":2,
+    "name":"goal",
+    "categories": ["action"],
+    "img": "2.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":3,
+    "name":"something",
+    "categories": ["action", "comedy", "drama"],
+    "img": "3.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":4,
+    "name":"ido",
+    "categories": ["comdey", "c1", "2c", "c3", "c4", "c5"],
+    "img": "4.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":5,
+    "name":"idii",
+    "categories": ["action"],
+    "img": "5.jpg",
+    "video": "1.mp4"
+}
+],
+"Drama":    [
+{
+    "id":1,
+    "name":"windows",
+    "categories": ["action", "drama"],
+    "img": "1.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":2,
+    "name":"goal",
+    "categories": ["action"],
+    "img": "2.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":3,
+    "name":"something",
+    "categories": ["action", "comedy", "drama"],
+    "img": "3.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":4,
+    "name":"ido",
+    "categories": ["comdey", "c1", "2c", "c3", "c4", "c5"],
+    "img": "4.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":7,
+    "name":"wow",
+    "categories": ["action", "comedy","c1", "drama"],
+    "img": "7.jpg",
+    "video": "1.mp4"
+},
+{
+    "id":8,
+    "name":"deskdeskdesk",
+    "categories": ["action", "comedy","c1", "drama", "horror"],
+    "img": "8.png",
+    "video": "1.mp4"
+}
+],
+"Horror":
+[{
+    "id":8,
+    "name":"deskdeskdesk",
+    "categories": ["action", "comedy","c1", "drama", "horror"],
+    "img": "8.png",
+    "video": "1.mp4"
+}],
+"Empty":[]
+}
