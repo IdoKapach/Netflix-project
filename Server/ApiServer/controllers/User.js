@@ -22,7 +22,11 @@ const getUser = async (req, res) => {
         if (!user) {
             throw new Error('User not found')
         }
-        return res.status(200).json(user)
+        return res.status(200).json({
+            username: user.username,
+            picture: user.picture
+        }
+        )
     } catch (e) {
         return res.status(500).json({error: e.message})
     }

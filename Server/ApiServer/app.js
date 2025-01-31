@@ -6,6 +6,7 @@ import { CategoryRouter } from './routes/category.js'
 import { recommendRouter } from './routes/recommend.js'
 import { MovieRouter } from './routes/movie.js'
 import { QueryRouter } from './routes/query.js'
+import { authantication } from './controllers/authantication.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
