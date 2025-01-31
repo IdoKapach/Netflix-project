@@ -1,4 +1,5 @@
 import {User} from "../models/User.js"
+import jwt from "jsonwebtoken"
 
 const getTokenService = async (username, password) => {
     try {
@@ -7,8 +8,12 @@ const getTokenService = async (username, password) => {
 
         // if a user with creds is found - returns its id
         if (user) {
-            console.log("got user: ", user)
-            return user._id
+            const payload = {
+                userId: user._id,
+                role: user.admin ? "admin" : "user",
+            }
+            const token = jwt.sign(payload, process.env.JWT_SECRET)
+            return token
         }
 
         // if no user is found - return null

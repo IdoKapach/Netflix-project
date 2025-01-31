@@ -14,6 +14,10 @@ const UserSchema = new Schema ({
         type: String,
         required: true,
     },
+    admin : {
+        type: Boolean,
+        default: false
+    },
     picture : {
         type: String, // URL or path to the image
     },
