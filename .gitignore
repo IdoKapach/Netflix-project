@@ -185,3 +185,6 @@ test_data
 .externalNativeBuild
 .cxx
 local.properties
+
+# bruno tests
+Server/ApiServer/JWT_api_tests

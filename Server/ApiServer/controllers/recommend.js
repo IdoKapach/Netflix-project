@@ -1,18 +1,9 @@
 import { getRecommendService, postRecommendService } from "../services/recommend.js";
 import movieServices from "../services/movie.js"
-import { authantication } from "../services/authantication.js";
 import { getUserService, updateUserService } from "../services/User.js";
 
 
 const getRecommend = async (req, res) => {
-    // authenticate user header
-    try {
-        await authantication(req)
-    } catch (e) {
-        console.error("Authentication failed: ", e)
-        return res.status(400).json({ error: e })
-    }
-
     const movie = req.params.id
     const user = req.header('userId')
     try {

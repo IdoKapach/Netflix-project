@@ -1,16 +1,7 @@
 import categoryService from '../services/category.js';
-import { authantication } from '../services/authantication.js';
 
 // function that responsible to create category given, name and promoted arguments. this func demands for user authantication
 const createCategory = async (req, res) => {
-    // checks the authantication
-    try {
-        await authantication(req)
-    }
-    // if the authantication failed, throws exeption
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to create the new user
     try {
         return res.json(await categoryService.createCategory(req.body.name, req.body.promoted));
@@ -44,13 +35,6 @@ const getCategory = async (req, res) => {
 
 // updates fields of exist category. require authantication.
 const updateCategory = async (req, res) => {
-    // checks authantication
-    try {
-        await authantication(req)
-    }
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to update the category which specified by it's Id
     try {
         await categoryService.updateCategory(req.params.id, req.body.name, req.body.promoted);
@@ -64,13 +48,6 @@ const updateCategory = async (req, res) => {
 
 // deletes category which was specified by it's Id. require authantication.
 const deleteCategory = async (req, res) => {
-    // checks authantication
-    try {
-        await authantication(req)
-    }
-    catch(e) {
-        return res.status(400).json({"error": e})
-    }
     // tries to delete the category
     try {
         const category = await categoryService.deleteCategory(req.params.id);
