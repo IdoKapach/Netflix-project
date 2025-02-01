@@ -1,7 +1,5 @@
 package com.example.targil4.entity;
 
-import androidx.room.Entity;
-
 public class User {
     private String username;
     private String password;

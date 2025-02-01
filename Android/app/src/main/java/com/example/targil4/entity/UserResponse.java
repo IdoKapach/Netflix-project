@@ -1,8 +1,6 @@
 package com.example.targil4.entity;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,36 +8,37 @@ import androidx.room.PrimaryKey;
 public class UserResponse {
     @PrimaryKey
     @NonNull
-    private String _id;
     private String username;
-    private Boolean loginSuccessful;
+    private String token;
+    private boolean admin;
 
-    public UserResponse(@NonNull String id, String username) {
-        this._id = id;
+    public UserResponse(@NonNull String username, String token, boolean admin) {
+        this.token = token;
+        this.admin = admin;
         this.username = username;
-    }
-
-    public String getId() {
-        return _id;
-    }
-
-    public void setId(@NonNull String _id) {
-        this._id = this._id;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(@NonNull String username) {
         this.username = username;
     }
 
-    public Boolean isLoginSuccessful() {
-        return loginSuccessful;
+    public String getToken() {
+        return token;
     }
 
-    public void setLoginSuccessful(boolean loginSuccessful) {
-        this.loginSuccessful = loginSuccessful;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

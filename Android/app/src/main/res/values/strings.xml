@@ -1,4 +1,20 @@
 <resources>
-    <string name="app_name">Targil4</string>
+    <string name="app_name">Kapach</string>
     <string name="BaseURL">http://172.20.10.7:3000/api/</string>
+    <string name="noUsername">Username is required!</string>
+    <string name="noPassword">Password is required!</string>
+    <string name="loginFail">Username and Password are not Kapach Enough!</string>
+    <string name="signupFail">Username Taken Kapach!</string>
+    <string name="netflixMotto">Unlimited movies, TV shows and more</string>
+    <string name="netflixMotto2">Watch anywhere. Cancel anytime.</string>
+    <string name="goToSignupButtonText">Get Started</string>
+    <string name="goToLoginButtonText">SIGN IN</string>
+    <string name="signupInstructions">Write your desired username and password to create an account and you will have access to Kapach.</string>
+    <string name="loginInstructions">please login:</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="signupButton">CREATE ACCOUNT</string>
+    <string name="loginButton">Sign In</string>
+
+
 </resources>

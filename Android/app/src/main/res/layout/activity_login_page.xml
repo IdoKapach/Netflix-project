@@ -17,14 +17,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
     <TextView
-        android:id="@+id/editTextText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Hello and welcome to Kapach's App!"
+        android:textStyle="bold"
+        android:text="@string/netflixMotto"
         android:textSize="20sp"/>
 
         <TextView
@@ -32,11 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:fontFamily="sans-serif-black"
             android:gravity="center"
-            android:inputType="text"
             android:padding="10dp"
-            android:text="please login:"
+            android:textStyle="bold"
+            android:text="@string/loginInstructions"
             android:textSize="16sp"/>
     </LinearLayout>
 
@@ -51,13 +49,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/Email"
+            android:id="@+id/Username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/username"
             android:layout_marginBottom="10dp"
-            android:inputType="textEmailAddress" />
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/Password"
@@ -66,7 +64,7 @@
             android:ems="10"
             android:inputType="textPassword"
             android:layout_marginBottom="10dp"
-            android:hint="Password"/>
+            android:hint="@string/password"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -74,17 +72,15 @@
             android:id="@+id/errorMassage"
             android:textColor="@color/red"
             android:textSize="0sp"
-            android:fontFamily="sans-serif-black"
-            android:gravity="center"
-            />
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:textColor="@color/white"
+            android:text="@string/loginButton"
             android:backgroundTint="@color/red"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ public class UserRepository {
     private LoggedOnLiveData loggedOnLiveData;
     private UserAPI userAPI;
 
+    // A builder for the repository
     public UserRepository() {
         AppDB db = Room.databaseBuilder(MyApplication.context,
                         AppDB.class, "FooDB")
@@ -27,47 +28,50 @@ public class UserRepository {
         userAPI = new UserAPI(loggedOnLiveData, dao);
     }
 
+    // class that extends the Mutable live data to check if user is logged on
     class LoggedOnLiveData extends MutableLiveData<Boolean> {
         public LoggedOnLiveData() {
             super();
         }
 
+
+        // when called gets from room the user data, and set livedata to true if there is a user
         @Override
         protected void onActive() {
             super.onActive();
-            android.util.Log.d("createUser", "On active atcivated");
+            android.util.Log.d("createUser", "On active activated");
             new Thread(() -> {
                 try {
                     UserResponse userResponse = dao.getLoggedInUser();
-                    loggedOnLiveData.postValue(userResponse.isLoginSuccessful());
+                    loggedOnLiveData.postValue(userResponse != null);
                 } catch (Exception e) {}
             }).start();
         }
     }
 
-    public LiveData<Boolean> signup(User user) {
-        android.util.Log.d("createUser", "Calling post");
+    // calls the API to signup the user, which will update livedata loggedOn
+    public void signup(User user) {
         userAPI.signup(user);
-        return loggedOnLiveData;
     }
 
-    public LiveData<Boolean> signin(User user) {
+    // calls the API to sign in the user, which will update livedata loggedOn
+    public void signin(User user) {
         userAPI.signin(user);
-        return loggedOnLiveData;
-    }
-    public boolean hasToken() {
-        try {
-            UserResponse user = dao.getLoggedInUser();
-            return user.isLoginSuccessful();
-        } catch (Exception e) {
-            return false;
-        }
     }
 
+    // calls room to check is there is a user logged on, returns the boolean accordingly
+    public LiveData<Boolean> hasToken() {
+        return loggedOnLiveData;
+    }
+
+    // calls room to delete its user data
     public void signOut() {
         try {
             dao.clearUserData();
-        } catch (Exception e) {
+        }
+
+        // no user data already
+        catch (Exception e) {
             return;
         }
     }
