@@ -90,7 +90,8 @@ public class UserAPI {
 
                     new Thread(() -> {
                         android.util.Log.d("createUser", "inserting user to dao");
-                        dao.insertUser(response.body());
+                        UserResponse user = new UserResponse(token);
+                        dao.insertUser(user);
                         android.util.Log.d("createUser", "User Logged On: " + dao.getLoggedInUser().getUsername());
                         loggedOn.postValue(true);
                     }).start();

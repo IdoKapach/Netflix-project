@@ -42,8 +42,7 @@ public class UserRepository {
             android.util.Log.d("createUser", "On active activated");
             new Thread(() -> {
                 try {
-                    UserResponse userResponse = dao.getLoggedInUser();
-                    loggedOnLiveData.postValue(userResponse != null);
+                    loggedOnLiveData.postValue(dao.getLoggedInUser() != null);
                 } catch (Exception e) {}
             }).start();
         }

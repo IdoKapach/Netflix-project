@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.gson)
     implementation(libs.room.common)
     implementation(libs.room.runtime)
+    implementation(libs.jwt.decode)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

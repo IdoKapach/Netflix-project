@@ -1,28 +1,41 @@
 package com.example.targil4.entity;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.auth0.android.jwt.JWT;
 
 @Entity
 public class UserResponse {
     @PrimaryKey
     @NonNull
-    private String username;
     private String token;
+    private String username;
     private boolean admin;
 
-    public UserResponse(@NonNull String username, String token, boolean admin) {
+    public UserResponse(@NonNull String token) {
         this.token = token;
-        this.admin = admin;
-        this.username = username;
+        try {
+            android.util.Log.d("createUser", "new JWT creation");
+            JWT jwt = new JWT(token);
+            this.username = jwt.getClaim("username").asString();
+            android.util.Log.d("createUser", "User ID: " + username);
+            String role = jwt.getClaim("role").asString();
+            this.admin = role.equals("admin");
+            android.util.Log.d("createUser", "Admin?: " + admin + ", " + role);
+        } catch (Exception e) {
+            android.util.Log.d("createUser", "Invalid Token: " + e.getMessage());
+        }
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(@NonNull String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -30,7 +43,7 @@ public class UserResponse {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(@NonNull String token) {
         this.token = token;
     }
 
