@@ -43,10 +43,6 @@
         <activity
             android:name=".LoginPage"
             android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-        </activity>
     </application>
 
 </manifest>
