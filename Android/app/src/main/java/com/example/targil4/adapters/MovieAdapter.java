@@ -1,14 +1,17 @@
 package com.example.targil4.adapters;// MovieAdapter.java
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.targil4.MovieInfoPage;
 import com.example.targil4.R;
 import com.example.targil4.R;
 import com.example.targil4.entity.Movie;
@@ -29,19 +32,34 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Inflate your item layout. Ensure item_movie.xml exists in res/layout
-        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
-        return new MovieViewHolder(view);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        return new MovieViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
-        // Use Glide (or any image loading library) to load the image into the ImageView.
+        // set movie details
         Glide.with(context)
                 .load(movie.getImageUrl())
                 .placeholder(R.drawable.movie_card_placeholder)
-                .error(R.drawable.movie_card_placeholder) // Placeholder in case of error
-                .into(holder.imageView);
+                .error(R.drawable.movie_card_placeholder)
+                .into(holder.moviePoster);
+        holder.movieTitle.setText(movie.getMovieName());
+
+        // set onClickListener for the item (go to movie info page)
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = holder.itemView.getContext();
+                Intent intent = new Intent(context, MovieInfoPage.class);
+                intent.putExtra("movieTitle", movie.getMovieName());
+                intent.putExtra("movieBackdrop", movie.getImageUrl());
+                intent.putExtra("movieUrl", movie.getMovieUrl());
+                intent.putExtra("movieDescription", movie.getDescription());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -51,12 +69,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     // ViewHolder class for movie items
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        public ImageView moviePoster;
+        public TextView movieTitle;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Make sure your item_movie.xml has an ImageView with id "movie_image"
-            imageView = itemView.findViewById(R.id.movie_image);
+            moviePoster = itemView.findViewById(R.id.movie_poster);
+            movieTitle = itemView.findViewById(R.id.movie_title);
         }
     }
 }

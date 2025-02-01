@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
         // stump - need to implement data fetching
         // data based on recommend api route
         List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 4", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 5", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 6", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 7", "https://via.placeholder.com/150"));
+        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150", "Description 1", "https://example.com/movie"));
+        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150", "Description 2", "https://example.com/movie"));
+        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150", "Description 3", "https://example.com/movie"));
+        movies.add(new Movie("Movie 4", "https://via.placeholder.com/150", "Description 4", "https://example.com/movie"));
+        movies.add(new Movie("Movie 5", "https://via.placeholder.com/150", "Description 5", "https://example.com/movie"));
+        movies.add(new Movie("Movie 6", "https://via.placeholder.com/150", "Description 6", "https://example.com/movie"));
+        movies.add(new Movie("Movie 7", "https://via.placeholder.com/150", "Description 7", "https://example.com/movie"));
 
         return movies;
     }
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
         // stump - need to implement data fetching
         // we don't need to actually use trending\popular - just random is good
         List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150"));
-        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150"));
+        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150", "Description 1", "https://example.com/movie"));
+        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150", "Description 2", "https://example.com/movie"));;
+        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150", "Description 3", "https://example.com/movie"));;
         return movies;
     }
 }
