@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
                     // Load the Search fragment
                     loadFragment(new SearchFragment());
                     return true;
+                } else if (itemId == R.id.admin) {
+                    // Load the Admin fragment
+                    loadFragment(new AdminFragment());
+                    return true;
                 }
                 return false;
             }

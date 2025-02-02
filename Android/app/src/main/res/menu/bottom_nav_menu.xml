@@ -8,4 +8,8 @@
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
         android:title="@string/search" />
+    <item
+        android:id="@+id/admin"
+        android:icon="@drawable/ic_admin"
+        android:title="@string/admin" />
 </menu>
