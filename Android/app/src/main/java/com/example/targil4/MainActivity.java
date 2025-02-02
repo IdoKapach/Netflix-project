@@ -1,26 +1,24 @@
 package com.example.targil4;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.targil4.adapters.MovieAdapter;
-import com.example.targil4.entity.Movie;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView trendingRecycler;
-    private RecyclerView popularRecycler;
-    private RecyclerView recommendedRecycler;
+    private BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,54 +31,33 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // init recycler views
-        trendingRecycler = findViewById(R.id.trending_recycler);
-        popularRecycler = findViewById(R.id.popular_recycler);
-        recommendedRecycler = findViewById(R.id.recommended_recycler);
+        // Set up Bottom Navigation
+        bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.home) {
+                    // Load the Home fragment
+                    loadFragment(new HomeFragment());
+                    return true;
+                } else if (itemId == R.id.search) {
+                    // Load the Search fragment
+                    loadFragment(new SearchFragment());
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        // get data to inflate recycler views (stump)
-        List<Movie> trendingMovies = getRandomMovies();
-        List<Movie> popularMovies = getRandomMovies();
-        List<Movie> recommendedMovies = getRecommendedMovies();
-
-        // create adapters
-        MovieAdapter trendingAdapter = new MovieAdapter(this, trendingMovies);
-        MovieAdapter popularAdapter = new MovieAdapter(this, popularMovies);
-        MovieAdapter recommendedAdapter = new MovieAdapter(this, recommendedMovies);
-
-        // set layout managers (horizontal)
-        trendingRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        popularRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recommendedRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-
-        // set adapters to views
-        trendingRecycler.setAdapter(trendingAdapter);
-        popularRecycler.setAdapter(popularAdapter);
-        recommendedRecycler.setAdapter(recommendedAdapter);
+        // Load the default fragment (HomeFragment)
+        loadFragment(new HomeFragment());
     }
 
-    private List<Movie> getRecommendedMovies() {
-        // stump - need to implement data fetching
-        // data based on recommend api route
-        List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150", "Description 1", "https://example.com/movie"));
-        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150", "Description 2", "https://example.com/movie"));
-        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150", "Description 3", "https://example.com/movie"));
-        movies.add(new Movie("Movie 4", "https://via.placeholder.com/150", "Description 4", "https://example.com/movie"));
-        movies.add(new Movie("Movie 5", "https://via.placeholder.com/150", "Description 5", "https://example.com/movie"));
-        movies.add(new Movie("Movie 6", "https://via.placeholder.com/150", "Description 6", "https://example.com/movie"));
-        movies.add(new Movie("Movie 7", "https://via.placeholder.com/150", "Description 7", "https://example.com/movie"));
-
-        return movies;
-    }
-
-    private List<Movie> getRandomMovies() {
-        // stump - need to implement data fetching
-        // we don't need to actually use trending\popular - just random is good
-        List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Movie 1", "https://via.placeholder.com/150", "Description 1", "https://example.com/movie"));
-        movies.add(new Movie("Movie 2", "https://via.placeholder.com/150", "Description 2", "https://example.com/movie"));;
-        movies.add(new Movie("Movie 3", "https://via.placeholder.com/150", "Description 3", "https://example.com/movie"));;
-        return movies;
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment); // Replace the fragment in the container
+        transaction.commit();
     }
 }

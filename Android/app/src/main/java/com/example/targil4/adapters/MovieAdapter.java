@@ -22,17 +22,35 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     private List<Movie> movieList;
     private Context context;
+    private boolean useContainer;
 
+    // default constructor
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
         this.movieList = movies;
+        this.useContainer = false;
+    }
+
+    // constructor with useContainer parameter
+    public MovieAdapter(Context context, List<Movie> movies, boolean useContainer) {
+        this.context = context;
+        this.movieList = movies;
+        this.useContainer = useContainer;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate your item layout. Ensure item_movie.xml exists in res/layout
-        View itemView = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        View itemView;
+        if (useContainer) {
+            itemView = LayoutInflater.from(context).inflate(
+                    R.layout.item_movie_container,
+                    parent, false);
+        } else {
+            itemView = LayoutInflater.from(context).inflate(
+                    R.layout.item_movie,
+                    parent, false);
+        }
         return new MovieViewHolder(itemView);
     }
 

@@ -6,4 +6,6 @@
     <string name="home">home</string>
     <string name="trending_now">Trending Now</string>
     <string name="recommended_for_you">Recommended for you</string>
+    <string name="search">search</string>
+    <string name="search_hint">Enter movie title</string>
 </resources>
