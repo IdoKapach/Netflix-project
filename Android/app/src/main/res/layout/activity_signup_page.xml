@@ -8,14 +8,15 @@
     tools:context=".SignupPage">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/SignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:padding="10dp"
-        android:text="SIGN IN"
+        android:text="@string/goToLoginButtonText"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +27,7 @@
         android:padding="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView3">
+        app:layout_constraintTop_toBottomOf="@id/SignIn">
 
         <TextView
             android:layout_width="match_parent"
@@ -34,37 +35,47 @@
             android:layout_marginBottom="15dp"
             android:textSize="18sp"
             android:gravity="center"
-            android:text="Unlimited movies, TV shows and more"
-            android:textStyle="bold"></TextView>
+            android:text="@string/netflixMotto"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:scrollHorizontally="false"
-            android:text="Create an accout and we'll send you an email with everything you need to know about Netflix."></TextView>
+            android:text="@string/signupInstructions"/>
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress2"
+            android:id="@+id/Username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textEmailAddress"
-            android:hint="Email"/>
+            android:inputType="text"
+            android:hint="@string/username"/>
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
+            android:id="@+id/Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
-            android:hint="Password"/>
+            android:hint="@string/password"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/errorMassage"
+            android:textColor="@color/red"
+            android:textSize="0sp"
+            android:gravity="center"
+            />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/SignupButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CREATE ACCOUNT"
+            android:text="@string/signupButton"
+            android:textColor="@color/white"
             android:backgroundTint="@color/red"
             android:layout_gravity="center"
             />
