@@ -46,4 +46,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.media3.ui)
 }
