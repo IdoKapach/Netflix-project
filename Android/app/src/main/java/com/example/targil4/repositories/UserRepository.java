@@ -64,6 +64,11 @@ public class UserRepository {
     }
 
     // calls room to delete its user data
+
+    public String getToken() {
+        android.util.Log.d("Movies", "getting Token!");
+        return dao.getLoggedInUser().getToken();
+    }
     public void signOut() {
         try {
             dao.clearUserData();

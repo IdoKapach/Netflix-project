@@ -30,4 +30,9 @@ public class UserViewModel extends ViewModel {
     public void signOut() {
         userRepo.signOut();
     }
+
+    public String getToken() {
+        android.util.Log.d("Movies", "wanting Token too!");
+        return userRepo.getToken();
+    }
 }
