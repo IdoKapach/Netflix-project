@@ -38,7 +38,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 // append static directory access
-app.use('/media', express.static(path.join(__dirname, 'media')));
+app.use('/media', authMiddleware, express.static(path.join(__dirname, 'media')));
 
 // add the user routes under /api route
 app.use('/api', userRouter)
