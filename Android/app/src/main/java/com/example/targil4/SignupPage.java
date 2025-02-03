@@ -91,7 +91,7 @@ public class SignupPage extends AppCompatActivity {
 
                     // if user did log in go to the registered main page
                     if (loggedIn) {
-                        Intent intent = new Intent(this, RegisteredMainpage.class);
+                        Intent intent = new Intent(this, MainActivity.class);
 
                         // remove all previous pages from stack
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

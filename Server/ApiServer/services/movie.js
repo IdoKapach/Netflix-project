@@ -34,54 +34,46 @@ const getNextId = async () => {
 }
 
 // function that responsible to create movie, given name, video and categories list arguments.
-const createMovie = async (name, video, categories) => {
+const createMovie = async (name, video, categories, image) => {
+    // checks if all the fields are given
     let errors = []
-    // checks if name has given
-    if (name === undefined) {
-        errors.push("Name is required")
-    }
-    // checks if video has given
-    if (video === undefined) {
-        errors.push("Video is required")
-    }
-    // checks if categories list has given
-    if (categories === undefined || categories.constructor != Array || categories.length === 0) {
-        errors.push("Categoris field is required")
-    }
+    if (!name) errors.push("Name is required");
+    if (!video) errors.push("Video is required");
+    if (!categories || categories.constructor != Array || categories.length === 0) errors.push("Categoris field is required");
+    if (!image) errors.push("Image is required");
     // checks if at least one of fields wasn't given
-    if (errors.length) {
-        throw errors
-    }
+    if (errors.length) throw errors;
+
     // checking if all the categories exist
     try{
         for (var catName of categories) {
             const category = await Category.find({'name' : catName})
             if (!category || category.length === 0) {
-                throw "One of the categories isn't exist"
+                throw "One of the categories doesn't exist"
             }
     }}
     catch (e) {
         throw [e]
     }
-    // in case error didn't occur, creating the movie
-    let movie
+
+    // in case errors didn't occur, save the movie
     try {
         let id = await getNextId()
-        movie = new Movie({ _id: id, name:name, video:video, categories: categories });
-        movie = await movie.save()
+        const movie = new Movie({ _id: id, name: name, video: video, image: image,  categories, image });
+        await movie.save()
+        // add the movie to all its' categories
+        const movieId = movie._id.toString()
+        for (var catName of categories) {
+            const category = (await Category.findOne({'name' : catName}))
+            category.movies.push(movieId)
+            await category.save()
+        }
+
+        // return the movie - on success
+        return movie;
+    } catch (e) {
+        throw [e];
     }
-    // in case the movie is already exist
-    catch (e) {
-        throw ["Movie's name is already in use."]
-    }
-    let movieId = movie._id.toString()
-    // appending the movieId to each movies list of each category that the movie is under it 
-    for (var catName of categories) {
-        const category = (await Category.find({'name' : catName}))[0]
-        category.movies.push(movieId)
-        await category.save()
-    }
-    return movie
 };
 
 // function that responsible to change the movie that has movieId, given name, video and categories list arguments.
@@ -250,4 +242,4 @@ const getMovies = async (id) => {
 
 
 
-export default {createMovie, getMovieById, changeMovie, deleteMovie, getMovies}
+export default { createMovie, getMovieById, changeMovie, deleteMovie, getMovies }

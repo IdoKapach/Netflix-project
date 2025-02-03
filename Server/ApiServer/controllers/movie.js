@@ -1,14 +1,19 @@
 import movieServices from '../services/movie.js'
+import fs from 'fs';
+import path from 'path';
 
 // function that responsible to create movie given name, video and categories arguments. this func demands for user authantication
 const createMovie = async (req, res) => {
-    // tries to create the new movie
     try {
-        return res.json(await movieServices.createMovie(req.body.name, req.body.video, req.body.categories));
-    }
-    // it would fail if the name or video or categories weren't given or if the name is already in use by another movie
-    catch(e) {
-        return res.status(400).json({"errors" : e})
+        const title = req.body.title;
+        const videoPath = req.filePaths.
+        //TODO: add the paths in the fileUpload.js, and fit them to the service call
+        // create the movie in the mongoDB
+        const newMovie = await movieServices.createMovie(req.body.title, videoPath, req.body.categories, imagePath);
+
+        return res.json(newMovie);
+    } catch(e) {
+        return res.status(400).json({errors : [e.message] })
     }
 };
 
