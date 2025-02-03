@@ -43,6 +43,7 @@ function SearchForm() {
       // navigates to /search/:query
       navigate(`/search/${query}`)
     }
+    setQuery("")
   };
 
   return (
