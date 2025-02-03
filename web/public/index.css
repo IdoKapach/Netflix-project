@@ -42,9 +42,14 @@
     padding: 3%
 }
 
-.my-h3 {
-    margin: 30px 50px;
+.my-h2 {
+    margin-left: 10%;
+    margin-right: 90%;
+    margin-top: 27px;
+    margin-bottom: 10px;
+    height: 60px;
 }
+
 #user-bar {
     color:#db7d65;
 }
@@ -52,5 +57,15 @@
     margin-left: 8px;
     margin-right: 10px;
     padding-top: 1%;
+}
+#video-div {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px
+}
+.carousel-control-next, .carousel-control-prev {
+    height: 40%;
+    margin-top: 5%;
+    width: 10%
 }
 /* ff3333 */

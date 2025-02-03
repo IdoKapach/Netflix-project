@@ -1,5 +1,6 @@
 import MovieCard from "./components/MovieCard";
 import categoriess from "./movies.json";
+import MoviePlayer from "./components/MoviePlayer";
 
 // render row of x movies: movie[movieInx] until movie[movieInx + x - 1]
 function MoviesRow({ movies, movieInx, x }) {
@@ -38,9 +39,9 @@ function CategoryCarousel({token, category, movies, id}) {
 
     return (
         <div>
-        <h3 class="h3 mb-3 fw-normal my-h3">{category}</h3>
-        <div id={`carouselExample${id}`} className="carousel slide">
-            <div className="carousel-inner" style={{ "padding-left": "11%", "padding-right": "11%" }}>
+        <h2 class="h2 mb-2 fw-normal my-h2">{category}</h2>
+        <div id={`carouselExample${id}`} className="carousel slide" style={{"width":"92%", "margin-left":"3.5%"}}>
+            <div className="carousel-inner" style={{ "padding-left": "7%", "padding-right": "7%" }}>
                 {elements}
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target={`#carouselExample${id}`} data-bs-slide="prev">
@@ -73,7 +74,10 @@ function Carousels({token}) {
 
 // render tye main page for the logged users
 function MainLoggedPage({token}) {
-    return <Carousels token={token}/>;
+    return (<div>
+        <MoviePlayer video={"1.mp4"} isHomePage={true} />
+        <Carousels token={token}/>
+    </div>);
 }
 
 export default MainLoggedPage;
