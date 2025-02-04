@@ -160,7 +160,7 @@ public class AdminFragment extends Fragment {
 
         // Build Retrofit instance.
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.BaseURL))
+                .baseUrl(getString(R.string.BaseURL).concat("api/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

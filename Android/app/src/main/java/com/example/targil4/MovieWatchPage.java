@@ -3,9 +3,11 @@ package com.example.targil4;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.Log;
+import android.view.PixelCopy;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -13,11 +15,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.media3.common.MediaItem;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.datasource.DefaultHttpDataSource;
 import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.source.MediaSource;
+import androidx.media3.exoplayer.source.ProgressiveMediaSource;
 import androidx.media3.ui.PlayerView;
 
-import java.net.URI;
+import com.example.targil4.viewModels.UserViewModel;
+
+import java.util.Map;
+
+import okhttp3.OkHttpClient;
 
 public class MovieWatchPage extends AppCompatActivity {
     private ExoPlayer player;
@@ -27,6 +38,10 @@ public class MovieWatchPage extends AppCompatActivity {
     private long playbackPosition = 0;
     private int currentWindow = 0;
     private boolean playWhenReady = true;
+    private final OkHttpClient client = new OkHttpClient();
+    private String movieId;
+    private String videoUrl;
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +54,9 @@ public class MovieWatchPage extends AppCompatActivity {
             return insets;
         });
 
+        // init user view model for token
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
         // Initialize views
         playerView = findViewById(R.id.videoPlayerView);
         backButton = findViewById(R.id.backButton);
@@ -46,32 +64,20 @@ public class MovieWatchPage extends AppCompatActivity {
 
         // get info from intent
         String videoTitle = getIntent().getStringExtra("videoTitle");
-        String videoUrl = getIntent().getStringExtra("videoUrl");
+        movieId = getIntent().getStringExtra("movieId");
 
         // set video title
         videoTitleTextView.setText(videoTitle);
-
-        // Initialize ExoPlayer
-        player = new ExoPlayer.Builder(this).build();
-        playerView.setPlayer(player);
-
-        // build movie video file
-        MediaItem mediaItem;
-        if (videoUrl != null) {
-            mediaItem = MediaItem.fromUri(videoUrl);
-        } else {
-            // use placeholder video if no url is provided
-            Uri placeholderUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.sample_video);
-            mediaItem = MediaItem.fromUri(placeholderUri);
-        }
-        player.setMediaItem(mediaItem);
-        player.prepare();
-        player.play();
 
         // set back button click listener
         backButton.setOnClickListener(v -> {
             finish();
         });
+
+        // temp url until movie repo is available
+        videoUrl = getString(R.string.BaseURL).concat("media/movies/videos/t.mp4");
+        Log.d("MovieWatchPage", "Video URL: " + videoUrl);
+        initializePlayer();
 
         // restore playback state
         if (savedInstanceState != null) {
@@ -111,11 +117,54 @@ public class MovieWatchPage extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         playerView.onPause();
+        if (player != null) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentMediaItemIndex();
+            playWhenReady = player.getPlayWhenReady();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        player.release();
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
+    @UnstableApi
+    private void initializePlayer() {
+        // check if url is inited (should come from room)
+        if (videoUrl == null || videoUrl.isEmpty()) {
+            Log.e("MovieWatchPage", "Video URL is null or empty");
+            return;
+        }
+
+        // get user token for auth
+        String userToken = userViewModel.getToken();
+
+        // create an http data source factory with the auth token attached
+        DefaultHttpDataSource.Factory dataSourceFactory = new DefaultHttpDataSource.Factory()
+                .setDefaultRequestProperties(Map.of("authorization", "Bearer " + userToken));
+
+        // create a media source that uses the data source with token attached
+        MediaSource.Factory mediaSourceFactory = new ProgressiveMediaSource.Factory(dataSourceFactory);
+
+        // create the exoplayer with the custom media source
+        player = new ExoPlayer.Builder(this)
+                .setMediaSourceFactory(mediaSourceFactory)
+                .build();
+
+        // set the player in the view to use the exo player
+        playerView.setPlayer(player);
+
+        // build movie video file
+        MediaItem mediaItem = MediaItem.fromUri(videoUrl);
+        player.setMediaItem(mediaItem);
+        player.prepare();
+        player.setPlayWhenReady(playWhenReady);
+        player.seekTo(currentWindow, playbackPosition);
     }
 }
+

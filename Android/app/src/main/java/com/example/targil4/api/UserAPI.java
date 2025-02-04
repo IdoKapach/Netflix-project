@@ -23,7 +23,7 @@ public class UserAPI {
     // A builder for the user API
     public UserAPI(MutableLiveData<Boolean> loggedOn, UserDao dao) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseURL))
+                .baseUrl(MyApplication.context.getString(R.string.BaseURL).concat("api/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);

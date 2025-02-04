@@ -27,7 +27,7 @@ public class CategoryAPI {
 
     public CategoryAPI(MutableLiveData<List<Category>> categoriesLiveData, CategoryDao dao, UserViewModel userViewModel) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseURL))
+                .baseUrl(MyApplication.context.getString(R.string.BaseURL).concat("api/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
