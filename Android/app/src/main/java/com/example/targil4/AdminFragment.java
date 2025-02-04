@@ -173,6 +173,7 @@ public class AdminFragment extends Fragment {
         Log.d("FileUpload", "Token: " + token);
 
         List<String> categoriesList = new ArrayList<>();
+        categoriesList.add("Drama");
         String categoriesJson = new Gson().toJson(categoriesList);
         RequestBody categories = RequestBody.create(
                 MediaType.parse("application/json"),
