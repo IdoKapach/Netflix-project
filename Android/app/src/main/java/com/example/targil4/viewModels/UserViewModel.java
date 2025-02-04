@@ -35,4 +35,8 @@ public class UserViewModel extends ViewModel {
         android.util.Log.d("Movies", "wanting Token too!");
         return userRepo.getToken();
     }
+
+    public boolean isAdmin() {
+        return userRepo.isAdmin();
+    }
 }

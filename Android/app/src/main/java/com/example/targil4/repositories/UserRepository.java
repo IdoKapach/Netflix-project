@@ -79,4 +79,8 @@ public class UserRepository {
             return;
         }
     }
+
+    public boolean isAdmin() {
+        return dao.getLoggedInUser().isAdmin();
+    }
 }

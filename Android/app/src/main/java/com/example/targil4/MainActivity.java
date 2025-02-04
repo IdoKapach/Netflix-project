@@ -12,13 +12,17 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.targil4.viewModels.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
+    private UserViewModel userViewModel;
+    private MenuItem adminItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Initialize ViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         // Set up Bottom Navigation
         bottomNav = findViewById(R.id.bottom_navigation);
@@ -56,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Load the default fragment (HomeFragment)
         loadFragment(new HomeFragment());
+
+        // Check if the logged in user is an admin and show the admin menu item accordingly
+        adminItem = bottomNav.getMenu().findItem(R.id.admin);
+        if (userViewModel.isAdmin()) {
+            adminItem.setVisible(true);
+        } else {
+            adminItem.setVisible(false);
+        }
     }
 
     private void loadFragment(Fragment fragment) {
