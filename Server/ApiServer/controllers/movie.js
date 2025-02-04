@@ -6,10 +6,11 @@ import path from 'path';
 const createMovie = async (req, res) => {
     try {
         const title = req.body.title;
-        const videoPath = req.filePaths.
-        //TODO: add the paths in the fileUpload.js, and fit them to the service call
-        // create the movie in the mongoDB
-        const newMovie = await movieServices.createMovie(req.body.title, videoPath, req.body.categories, imagePath);
+        const videoPath = req.videoPath;
+        const imagePath = req.imagePath;
+        const categories = JSON.parse(req.body.categories);
+        
+        const newMovie = await movieServices.createMovie(title, videoPath, categories, imagePath);
 
         return res.json(newMovie);
     } catch(e) {

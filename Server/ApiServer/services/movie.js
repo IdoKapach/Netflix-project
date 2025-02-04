@@ -39,7 +39,7 @@ const createMovie = async (name, video, categories, image) => {
     let errors = []
     if (!name) errors.push("Name is required");
     if (!video) errors.push("Video is required");
-    if (!categories || categories.constructor != Array || categories.length === 0) errors.push("Categoris field is required");
+    if (!categories || !Array.isArray(categories) || categories.length === 0) errors.push("Categoris field is required");
     if (!image) errors.push("Image is required");
     // checks if at least one of fields wasn't given
     if (errors.length) throw errors;
@@ -49,6 +49,7 @@ const createMovie = async (name, video, categories, image) => {
         for (var catName of categories) {
             const category = await Category.find({'name' : catName})
             if (!category || category.length === 0) {
+                console.log(catName, 'isnt a category')
                 throw "One of the categories doesn't exist"
             }
     }}
@@ -56,10 +57,12 @@ const createMovie = async (name, video, categories, image) => {
         throw [e]
     }
 
+    console.log('made it here')
+
     // in case errors didn't occur, save the movie
     try {
         let id = await getNextId()
-        const movie = new Movie({ _id: id, name: name, video: video, image: image,  categories, image });
+        const movie = new Movie({ _id: id, name: name, video: video, image: image,  categories: categories });
         await movie.save()
         // add the movie to all its' categories
         const movieId = movie._id.toString()

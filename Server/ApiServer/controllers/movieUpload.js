@@ -2,36 +2,37 @@ import multer from 'multer';
 import fs from 'fs'
 import path from 'path'
 
+const rootFolder = path.join(import.meta.dirname, '../media/movies');
+
 // set the file location
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        console.log('fieldname: ', file.fieldname);
-        console.log('originalname: ', file.originalname);
         // save videos under 'videos' and images under 'images'
-        let rootFolder = '../media/movies/'
-        let folder;
+        let destFolder;
+        // check subir and path for video files
         if (file.fieldname === 'videoFile') {
-            folder = rootFolder + 'videos'
+            // set destination folder to the videos subdir
+            destFolder = path.join(rootFolder, 'videos')
             // add the folder to the req for the controller (to add to mongo)
+            req.videoPath = path.join(destFolder, file.originalname);
+        // check subir and path for image files
         } else if (file.fieldname === 'imageFile'){
-            folder = rootFolder + 'images'
+            destFolder = path.join(rootFolder, 'images')
+            req.imagePath = path.join(destFolder, file.originalname)
+        } else {
+            // another type of file shouldnt be here
+            cb(new Error('invalid file field'), null);
         }
-        // create the folder if it doesn't exist
-        if (!fs.existsSync(folder)) {
-            fs.mkdirSync(folder, { recursive: true });
+        
+        // create file if it doesnt exist
+        if (!fs.existsSync(destFolder)) {
+            fs.mkdirSync(destFolder, { recursive: true });        
         }
-        cb(null, folder);
+        // continue to the next middleware (the actual file upload) and give it the correct subdir
+        cb(null, destFolder)
     },
     filename: (req, file, cb) => {
-        // add the file name to the req for the controller (to add to mongo)
-        const fullPath = path.join(req.uploadFolder, file.originalname)
-        // create the paths list if needed
-        if (!req.filePaths) {
-            req.filePaths = [];
-        }
-        // add the current file path (can be either image or video)
-        req.filePaths.push(fullPath);
-        cb(null, file.originalname);
+        cb(null, file.originalname)
     }
 })
 
