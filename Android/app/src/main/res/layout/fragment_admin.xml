@@ -7,18 +7,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:text="Add New Movie"
             android:textColor="@color/white"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutMovieTitle"
@@ -58,9 +58,31 @@
                 android:minLines="3"
                 android:textColor="@color/white" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Categories Selection -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutMovieCategory"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Main Category"
+            android:textColorHint="#8A8888"
+            app:boxStrokeColor="@color/red"
+            app:hintTextColor="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextMovieCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -72,25 +94,25 @@
                     android:id="@+id/buttonSelectFile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Video"
-                    android:textColor="@color/white"
+                    android:layout_margin="4dp"
                     android:backgroundTint="@android:color/holo_red_light"
                     android:padding="12dp"
+                    android:text="Select Video"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"/>
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/buttonSelectImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
                     android:backgroundTint="@android:color/holo_red_light"
+                    android:padding="12dp"
                     android:text="Select Image"
                     android:textColor="@color/white"
-                    android:padding="12dp"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -98,14 +120,14 @@
                 android:id="@+id/buttonAddMovie"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
                 android:backgroundTint="@color/red"
+                android:padding="12dp"
                 android:text="Add Movie"
                 android:textColor="@color/white"
-                android:padding="12dp"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_margin="4dp"
-                android:layout_gravity="center" />
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

@@ -52,6 +52,7 @@ public class AdminFragment extends Fragment {
 
     private EditText editTextMovieTitle;
     private EditText editTextMovieDescription;
+    private EditText editTextMovieCategory;
     private Button buttonAddMovie;
     private Button buttonSelectFile;
     private Button buttonSelectImage;
@@ -92,6 +93,7 @@ public class AdminFragment extends Fragment {
 
         editTextMovieTitle = view.findViewById(R.id.editTextMovieTitle);
         editTextMovieDescription = view.findViewById(R.id.editTextMovieDescription);
+        editTextMovieCategory = view.findViewById(R.id.editTextMovieCategory);
         buttonAddMovie = view.findViewById(R.id.buttonAddMovie);
         buttonSelectFile = view.findViewById(R.id.buttonSelectFile);
         buttonSelectImage = view.findViewById(R.id.buttonSelectImage);
@@ -122,6 +124,7 @@ public class AdminFragment extends Fragment {
         // fetch data from view
         String movieTitle = editTextMovieTitle.getText().toString();
         String movieDescription = editTextMovieDescription.getText().toString();
+        String movieCategory = editTextMovieCategory.getText().toString();
 
         // check if all fields are filled
         if (videoUri == null) {
@@ -138,6 +141,10 @@ public class AdminFragment extends Fragment {
         }
         if (movieDescription.isEmpty()) {
             editTextMovieDescription.setError("Description is required");
+            return;
+        }
+        if (movieCategory.isEmpty()) {
+            editTextMovieCategory.setError("Category is required");
             return;
         }
 
@@ -173,7 +180,7 @@ public class AdminFragment extends Fragment {
         Log.d("FileUpload", "Token: " + token);
 
         List<String> categoriesList = new ArrayList<>();
-        categoriesList.add("Drama");
+        categoriesList.add(movieCategory);
         String categoriesJson = new Gson().toJson(categoriesList);
         RequestBody categories = RequestBody.create(
                 MediaType.parse("application/json"),
