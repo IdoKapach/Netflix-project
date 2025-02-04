@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken'
 // usage: authantication() - will require the user to have any role in order to continue
 const authantication = (requiredRole) => {
     return async (req, res, next) => {
+    //debug check
+    console.log(`authantication: ${requiredRole}`)
     // read auth header
     const authHeader = req.header('authorization')
     // check if the header is empty and reads the second part of the header
@@ -19,6 +21,7 @@ const authantication = (requiredRole) => {
         const payload = jwt.verify(token, process.env.JWT_SECRET)
         // verify the role (if required)
         if (requiredRole && payload.role !== requiredRole) {
+            console.log('auth failed')
             return res.sendStatus(403)
         }
         // set the user to the one extracted from the token
