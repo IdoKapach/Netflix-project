@@ -20,7 +20,7 @@ public class CategoryViewModel extends ViewModel {
 
     public Category getCategory(String id) {
         if (categories == null || categories.getValue() == null) {
-            return null; // Prevents crash if categories is not yet loaded
+            return null;
         }
         List<Category> categoryList = categories.getValue();
         if (categoryList != null) {
