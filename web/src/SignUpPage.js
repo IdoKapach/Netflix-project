@@ -1,6 +1,6 @@
 // render the sign-up page
 function SignUpPage({handleLogin}) {
-    
+  handleLogin("hgh")
   return (
       <div class="d-flex align-items-center py-4 bg-body-tertiary" id="login-cart">
   
