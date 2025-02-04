@@ -8,10 +8,10 @@ import com.example.targil4.entity.Category;
 import com.example.targil4.entity.Movie;
 import com.example.targil4.entity.UserResponse;
 
-@Database(entities = {UserResponse.class, Category.class}, version = 6)
+@Database(entities = {UserResponse.class, Category.class, Movie.class}, version = 8)
 @TypeConverters(Converters.class)
 public abstract class AppDB extends RoomDatabase {
     public abstract UserDao UserDao();
-    //public abstract MovieDao MovieDao();
     public abstract CategoryDao CategoryDao();
+    public abstract MovieDao MovieDao();
 }

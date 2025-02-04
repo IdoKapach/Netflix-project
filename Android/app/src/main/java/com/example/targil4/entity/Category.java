@@ -10,9 +10,10 @@ import java.util.List;
 
 @Entity
 public class Category {
+
+    private String _id;
     @PrimaryKey
     @NonNull
-    private String _id;
     private String name;
     private List<String> movies;
     private boolean promoted;
@@ -25,25 +26,26 @@ public class Category {
     }
 
     @Ignore
-    public Category(String name, boolean promoted) {
+    public Category(String name,List<String> movies, boolean promoted) {
         this.name = name;
         this.promoted = promoted;
+        this.movies = movies;
     }
 
-    @NonNull
     public String get_id() {
         return _id;
     }
 
-    public void setId(@NonNull String _id) {
+    public void setId(String _id) {
         this._id = _id;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 
