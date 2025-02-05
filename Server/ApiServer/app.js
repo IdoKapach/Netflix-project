@@ -7,6 +7,7 @@ import { recommendRouter } from './routes/recommend.js'
 import { MovieRouter } from './routes/movie.js'
 import { QueryRouter } from './routes/query.js'
 import { authantication } from './controllers/authantication.js'
+import { UploadRouter } from './routes/Upload.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from 'path'
@@ -38,8 +39,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 // append static directory access
-app.use('/media', authMiddleware, express.static(path.join(__dirname, 'media')));
-
+app.use('/media', express.static(path.join(__dirname, 'media')));
+// add the upload routes under /upload route
+app.use('/upload', UploadRouter)
 // add the user routes under /api route
 app.use('/api', userRouter)
 // add the token route under /api route
