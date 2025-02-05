@@ -20,8 +20,6 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class MovieRepository {
-    //private MovieDao dao;
-    //private MoviesLiveData moviesLiveData;
     private CategoriesLiveData categoriesLiveData;
     private MoviesLiveData moviesLiveData;
     private CategoryDao categoryDao;

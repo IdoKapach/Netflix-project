@@ -5,4 +5,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="almostWhite">#FFF5F5F5</color>
     <color name="red">#FFFF0000</color>
+    <color name="green">#FF00FF00</color>
 </resources>

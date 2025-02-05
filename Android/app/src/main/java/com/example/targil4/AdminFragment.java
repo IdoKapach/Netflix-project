@@ -28,10 +28,14 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.targil4.adapters.AdminPagerAdapter;
 import com.example.targil4.api.FileUploadAPI;
 import com.example.targil4.api.UriRequestBody;
 import com.example.targil4.viewModels.UserViewModel;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
@@ -66,7 +70,7 @@ public class AdminFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/*
         // register media pickers
         videoPicker = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
             if (uri != null) {
@@ -83,14 +87,14 @@ public class AdminFragment extends Fragment {
             } else {
                 Log.d("ImagePicker", "No media selected");
             }
-        });
+        });*/
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_admin, container, false);
-
+/*
         editTextMovieTitle = view.findViewById(R.id.editTextMovieTitle);
         editTextMovieDescription = view.findViewById(R.id.editTextMovieDescription);
         editTextMovieCategory = view.findViewById(R.id.editTextMovieCategory);
@@ -116,6 +120,19 @@ public class AdminFragment extends Fragment {
                 chooseImage();
             }
         });
+*/
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        ViewPager2 viewPager = view.findViewById(R.id.viewPager);
+
+        AdminPagerAdapter adapter = new AdminPagerAdapter(requireActivity());
+        viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> {
+                    String[] titles = {"Add Movie", "Edit Movie", "Delete Movie",
+                            "Add Category", "Edit Category", "Delete Category"};
+                    tab.setText(titles[position]);
+                }).attach();
 
         return view;
     }
@@ -228,6 +245,7 @@ public class AdminFragment extends Fragment {
             return "mp4"; // default value
         }
         String[] split = mimeType.split("/");
+
         if (split.length != 2) {
             return "mp4"; // default value
         }

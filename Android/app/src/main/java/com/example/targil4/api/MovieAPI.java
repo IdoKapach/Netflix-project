@@ -31,7 +31,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieAPI {
     Retrofit retrofit;
     WebServiceAPI webServiceAPI;
-    //private MutableLiveData<Movie> movieLiveData;
     private UserViewModel userViewModel;
     private String token;
     private MovieDao moviedao;
@@ -40,7 +39,7 @@ public class MovieAPI {
     MutableLiveData<List<Movie>> moviesLiveData;
     public MovieAPI(MutableLiveData<List<Category>> categoriesLiveData, MutableLiveData<List<Movie>> moviesLiveData, UserViewModel userViewModel, MovieDao movieDao, CategoryDao categoryDao) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseURL))
+                .baseUrl(MyApplication.context.getString(R.string.BaseURL).concat("api/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);

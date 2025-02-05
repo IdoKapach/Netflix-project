@@ -5,10 +5,11 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
-material = "1.10.0"
+material = "1.9.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
 media3Exoplayer = "1.5.1"
+core = "1.15.0"
 
 [libraries]
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
@@ -29,6 +30,9 @@ gson = "com.google.code.gson:gson:2.9.0"
 room-runtime = "androidx.room:room-runtime:2.4.2"
 room-compiler = "androidx.room:room-compiler:2.4.2"
 room-common = "androidx.room:room-common:2.4.2"
+viewpager2 =  'androidx.viewpager2:viewpager2:1.0.0'
+core = { group = "androidx.core", name = "core", version.ref = "core" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

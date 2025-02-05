@@ -75,4 +75,8 @@ public interface WebServiceAPI {
             @Part("categories") RequestBody categories
     );
 
-}
+    @GET("movies/{id}/recommend")
+    Call<List<Movie>> getRecommendations(@Header("authorization") String token, @Path("id") String id);
+
+    @POST("movies/{id}/recommend")
+    Call<Void> watchedMovie(@Header("authorization") String token, @Path("id") String id);}

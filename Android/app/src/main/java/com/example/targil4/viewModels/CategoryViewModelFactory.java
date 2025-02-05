@@ -26,6 +26,9 @@ public class CategoryViewModelFactory implements ViewModelProvider.Factory {
         else if (modelClass.isAssignableFrom(MovieViewModel.class)) {
             return (T) new MovieViewModel(userViewModel);
         }
+        else if (modelClass.isAssignableFrom(RecommenderViewModel.class)) {
+            return (T) new RecommenderViewModel(userViewModel);
+        }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

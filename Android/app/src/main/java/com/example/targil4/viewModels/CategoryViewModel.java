@@ -48,5 +48,20 @@ public class CategoryViewModel extends ViewModel {
     public void deleteCategory(Category category) {
         categoryRepo.deleteCategory(category.get_id());
     }
+
+    public Category getCategoryByName(String name) {
+        if (categories == null || categories.getValue() == null) {
+            return null;
+        }
+        List<Category> categoryList = categories.getValue();
+        if (categoryList != null) {
+            for (Category category : categoryList) {
+                if (category.getName().equals(name)) {
+                    return category;
+                }
+            }
+        }
+        return null;
+    }
 }
 

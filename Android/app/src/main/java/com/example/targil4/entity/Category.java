@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.targil4.room.Converters;
 
 import java.lang.annotation.Native;
 import java.util.List;
@@ -15,6 +18,7 @@ public class Category {
     @PrimaryKey
     @NonNull
     private String name;
+    @TypeConverters(Converters.class)
     private List<String> movies;
     private boolean promoted;
 
