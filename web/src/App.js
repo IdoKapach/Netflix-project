@@ -62,7 +62,7 @@ const App = () => {
         {/* renders the login page */}
         <Route
           path="/login"
-          element= {<LoginPage handleLogin={handleLogin} onMLogin={handleMLogin} />}
+          element= {<LoginPage handleLogin={handleLogin} handleMlogin={handleMLogin} />}
         />
         {/* renders the sign-up page */}
         <Route
