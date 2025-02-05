@@ -24,4 +24,5 @@
     <string name="search_hint">Enter movie title</string>
     <string name="movie_title">Movie Title</string>
     <string name="admin">admin</string>
+    <string name="category_name">category name</string>
 </resources>

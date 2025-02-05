@@ -1,5 +1,6 @@
 package com.example.targil4;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.targil4.viewModels.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNav;
     private UserViewModel userViewModel;
     private MenuItem adminItem;
+    private MaterialButton logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
         } else {
             adminItem.setVisible(false);
         }
+
+        // add logout button
+        logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(v -> {
+            userViewModel.signOut();
+            Intent intent = new Intent(MainActivity.this, UnregisteredMainpage.class);
+            startActivity(intent);
+        });
     }
 
     private void loadFragment(Fragment fragment) {

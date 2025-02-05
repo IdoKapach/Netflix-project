@@ -38,7 +38,8 @@ public class SearchFragment extends Fragment {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         searchResultsRecycler.setLayoutManager(gridLayoutManager);
-        searchResultsRecycler.setAdapter(new MovieAdapter(requireContext(), getDummyMovies(), true));
+        // TODO: update search to use query view model
+//        searchResultsRecycler.setAdapter(new MovieAdapter(requireContext()));
         // TODO: Implement search logic here
     }
 
