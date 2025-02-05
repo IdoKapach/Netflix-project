@@ -64,6 +64,7 @@ public class MovieWatchPage extends AppCompatActivity {
 
         // get info from intent
         String videoTitle = getIntent().getStringExtra("videoTitle");
+        String movieUrl = getIntent().getStringExtra("movieUrl");
         movieId = getIntent().getStringExtra("movieId");
 
         // set video title
@@ -75,7 +76,7 @@ public class MovieWatchPage extends AppCompatActivity {
         });
 
         // temp url until movie repo is available
-        videoUrl = getString(R.string.BaseURL).concat("media/movies/videos/t.mp4");
+        videoUrl = getString(R.string.BaseURL).concat(movieUrl);
         Log.d("MovieWatchPage", "Video URL: " + videoUrl);
         initializePlayer();
 

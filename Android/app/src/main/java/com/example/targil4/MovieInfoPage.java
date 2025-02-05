@@ -45,8 +45,8 @@ public class MovieInfoPage extends AppCompatActivity {
             throw new IllegalStateException("movie info Intent cannot be null");
         }
         String movieTitle = intent.getStringExtra("movieTitle");
-        String movieUrl = getString(R.string.BaseURL).concat(intent.getStringExtra("movieUrl"));
         String movieBackdrop = getString(R.string.BaseURL).concat(intent.getStringExtra("movieBackdrop"));
+        String movieUrl = intent.getStringExtra("movieUrl");
         String movieDescription = intent.getStringExtra("movieDescription");
 
         // load movie details into views
@@ -80,7 +80,7 @@ public class MovieInfoPage extends AppCompatActivity {
             Intent watchIntent = new Intent(MovieInfoPage.this, MovieWatchPage.class);
             // add movie details to intent
             watchIntent.putExtra("movieTitle", movieTitle);
-            watchIntent.putExtra("MovieUrl", movieUrl);
+            watchIntent.putExtra("movieUrl", movieUrl);
             // start movie watch activity
             startActivity(watchIntent);
         });
