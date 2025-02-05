@@ -15,53 +15,45 @@ import com.example.targil4.MovieInfoPage;
 import com.example.targil4.R;
 import com.example.targil4.R;
 import com.example.targil4.entity.Movie;
+import com.example.targil4.viewModels.MovieViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> movieList;
+    private List<Movie> movies = new ArrayList<>();
     private Context context;
-    private boolean useContainer;
+    private MovieViewModel movieViewModel;
 
     // default constructor
-    public MovieAdapter(Context context, List<Movie> movies) {
+    public MovieAdapter(Context context, MovieViewModel movieViewModel) {
         this.context = context;
-        this.movieList = movies;
-        this.useContainer = false;
-    }
+        this.movieViewModel = movieViewModel;
 
-    // constructor with useContainer parameter
-    public MovieAdapter(Context context, List<Movie> movies, boolean useContainer) {
-        this.context = context;
-        this.movieList = movies;
-        this.useContainer = useContainer;
+        // update the movie list from the view model
+        movieViewModel.getHomePageMovies().observeForever(movies -> {
+                    this.movies = movies;
+                    notifyDataSetChanged();
+                }
+        );
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
-        if (useContainer) {
-            itemView = LayoutInflater.from(context).inflate(
-                    R.layout.item_movie_container,
-                    parent, false);
-        } else {
-            itemView = LayoutInflater.from(context).inflate(
-                    R.layout.item_movie,
-                    parent, false);
-        }
-        return new MovieViewHolder(itemView);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Movie movie = movieList.get(position);
+        Movie movie = movies.get(position);
         // set movie details
         Glide.with(context)
                 .load(movie.getImageUrl())
-                .placeholder(R.drawable.movie_card_placeholder)
-                .error(R.drawable.movie_card_placeholder)
+                .placeholder(R.drawable.movie_card_placeholder) // display while loading
+                .error(R.drawable.movie_card_placeholder) // display on error
                 .into(holder.moviePoster);
         holder.movieTitle.setText(movie.getMovieName());
 
@@ -82,7 +74,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return movies.size();
+    }
+
+    public void updateMovies(List<Movie> newMovies) {
+        this.movies = newMovies;
+        notifyDataSetChanged();
     }
 
     // ViewHolder class for movie items

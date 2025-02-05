@@ -40,7 +40,7 @@ public class MovieAPI {
     MutableLiveData<List<Movie>> moviesLiveData;
     public MovieAPI(MutableLiveData<List<Category>> categoriesLiveData, MutableLiveData<List<Movie>> moviesLiveData, UserViewModel userViewModel, MovieDao movieDao, CategoryDao categoryDao) {
         retrofit = new Retrofit.Builder()
-                .baseUrl(MyApplication.context.getString(R.string.BaseURL))
+                .baseUrl(MyApplication.context.getString(R.string.BaseURL).concat("api/"))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webServiceAPI = retrofit.create(WebServiceAPI.class);
@@ -118,7 +118,7 @@ public class MovieAPI {
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
-                Log.e("Movies", "got the Respond! " + response.code());
+                Log.e("Movies", "getMovie - got the Respond! " + response.code());
                 if (response.isSuccessful()) {
                     android.util.Log.d("Movies", "the name is: " + response.body().getMovieName());
                     android.util.Log.d("Movies", "he has C: " + response.body().getCategories().size());
@@ -141,7 +141,7 @@ public class MovieAPI {
         call.enqueue(new Callback<Map<String, List<String>>>() {
             @Override
             public void onResponse(Call<Map<String, List<String>>> call, Response<Map<String, List<String>>> response) {
-                Log.e("Movies", "got the Respond! " + response.code());
+                Log.e("Movies", "getMovies (plural) - got the Respond! " + response.code());
                 if (response.isSuccessful()) {
                     Log.e("Movies", "response successful!");
                     Map<String, List<String>> moviesMap = response.body();
