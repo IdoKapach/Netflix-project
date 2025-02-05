@@ -60,14 +60,19 @@ const getRecommendService = async (user, movie) => {
 const postRecommendService = async (user, movie) => {
     try {
         // use the GET command to identify if the user is already in the system or not.
+        console.error(`get user to see if it exists`)
         await tcpRequest('GET', user, movie)
+        console.error(`patching him`)
         //if it does -> send patch request
         await tcpRequest('PATCH', user, movie)
     } catch (e) {
-        if (e.message.includes('Failed to process TCP request')) {
+        console.error(`first part failed`)
+        if (e.message.includes('Make sure user has already watched a movie')) {
             // if the PATCH failed -> user doesnt exist so we try to POST
+            console.error(`GET failed so post`)
             await tcpRequest('POST', user, movie)
         } else {
+            console.error(`failed again`)
             throw e
         }
     }

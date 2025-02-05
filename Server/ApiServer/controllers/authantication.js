@@ -25,7 +25,8 @@ const authantication = (requiredRole) => {
             return res.sendStatus(403)
         }
         // set the user to the one extracted from the token
-        req.user = payload.userId
+        req.user = payload.id
+
         // continue to the next controller
         next()
     } catch (e) {

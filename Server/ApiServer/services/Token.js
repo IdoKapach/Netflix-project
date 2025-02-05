@@ -9,6 +9,7 @@ const getTokenService = async (username, password) => {
         // if a user with creds is found - returns its id
         if (user) {
             const payload = {
+                id: user.id,
                 username: user.username,
                 role: user.admin ? "admin" : "user",
             }

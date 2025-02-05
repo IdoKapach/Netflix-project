@@ -5,7 +5,7 @@ import { getUserService, updateUserService } from "../services/User.js";
 
 const getRecommend = async (req, res) => {
     const movie = req.params.id
-    const user = req.header('userId')
+    const user = req.user
     try {
         const recommends = await getRecommendService(user, movie)
         if (recommends) {
@@ -20,17 +20,14 @@ const getRecommend = async (req, res) => {
 }
 
 const postRecommend = async (req, res) => {
-    // authenticate user header
-    try {
-        await authantication(req)
-    } catch (e) {
-        console.error("Authentication failed: ", e)
-        return res.status(400).json({ error: e })
-    }
     
+    console.error(`posting`)
     // extract movie and user ids
     const movie = req.params.id
-    const user = req.header('userId')
+    console.error(`got movie id`)
+    const user = req.user
+    console.error(`post movie: ${movie} to user: ${user}`)
+
 
     // check if movie is in the api DB
     try {
