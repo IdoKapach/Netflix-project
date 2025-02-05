@@ -11,8 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.example.targil4.viewModels.UserViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class MovieInfoPage extends AppCompatActivity {
@@ -41,20 +45,30 @@ public class MovieInfoPage extends AppCompatActivity {
             throw new IllegalStateException("movie info Intent cannot be null");
         }
         String movieTitle = intent.getStringExtra("movieTitle");
-        String movieUrl = intent.getStringExtra("movieUrl");
-        String movieBackdrop = intent.getStringExtra("movieBackdrop");
+        String movieUrl = getString(R.string.BaseURL).concat(intent.getStringExtra("movieUrl"));
+        String movieBackdrop = getString(R.string.BaseURL).concat(intent.getStringExtra("movieBackdrop"));
         String movieDescription = intent.getStringExtra("movieDescription");
 
         // load movie details into views
         title.setText(movieTitle);
         description.setText(movieDescription);
 
+        // get the user auth token for glide image
+        UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        String userToken = userViewModel.getToken();
+
+        // create the glide url with the token
+        LazyHeaders headers = new LazyHeaders.Builder()
+                .addHeader("authorization", "Bearer " + userToken)
+                .build();
+
+        GlideUrl glideUrl = new GlideUrl(movieBackdrop, headers);
+
         Glide.with(this)
-                .load(movieBackdrop)
+                .load(glideUrl)
                 .placeholder(R.drawable.movie_card_placeholder)
                 .error(R.drawable.movie_card_placeholder)
                 .into(backdrop);
-
 
         // set click listener for back button
         backButton.setOnClickListener(v -> {

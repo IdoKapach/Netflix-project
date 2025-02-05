@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
         // set the layout manager
         categoriesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // set the adapter
-        categoryAdapter = new CategoryAdapter(getContext(), movieViewModel);
+        categoryAdapter = new CategoryAdapter(getContext(), movieViewModel, userViewModel.getToken());
         categoriesRecyclerView.setAdapter(categoryAdapter);
 
         // observe the categories live data
@@ -61,6 +61,15 @@ public class HomeFragment extends Fragment {
                 categories -> {
                     Log.d("Categories", "got the categories!, size: " + categories.size());
                     if (categories != null) { categoryAdapter.updateCategories(categories); }
+                }
+        );
+
+        // observe the movies live data
+        movieViewModel.getHomePageMovies().observe(
+                getViewLifecycleOwner(),
+                movies -> {
+                    Log.d("Movies", "got the movies!, size: " + movies.size());
+                    if (movies != null) { categoryAdapter.updateMovies(movies); }
                 }
         );
     }

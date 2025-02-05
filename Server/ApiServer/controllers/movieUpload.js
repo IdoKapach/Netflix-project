@@ -11,14 +11,18 @@ const storage = multer.diskStorage({
         let destFolder;
         // check subir and path for video files
         if (file.fieldname === 'videoFile') {
+            // define the relative path to pass to the clients (to access static files)
+            const relativeFolder = 'media/movies/videos'
             // set destination folder to the videos subdir
             destFolder = path.join(rootFolder, 'videos')
-            // add the folder to the req for the controller (to add to mongo)
-            req.videoPath = path.join(destFolder, file.originalname);
+            // add the relative folder to the req for the controller (to add to mongo)
+            req.videoPath = path.join(relativeFolder, file.originalname);
+            console.log("req.videopath: ", req.videoPath)
         // check subir and path for image files
         } else if (file.fieldname === 'imageFile'){
+            const relativeFolder = 'media/movies/images'
+            req.imagePath = path.join(relativeFolder, file.originalname)
             destFolder = path.join(rootFolder, 'images')
-            req.imagePath = path.join(destFolder, file.originalname)
         } else {
             // another type of file shouldnt be here
             cb(new Error('invalid file field'), null);

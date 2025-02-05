@@ -1,6 +1,7 @@
 package com.example.targil4.adapters;// MovieAdapter.java
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,35 +9,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.targil4.MovieInfoPage;
 import com.example.targil4.R;
 import com.example.targil4.R;
 import com.example.targil4.entity.Movie;
 import com.example.targil4.viewModels.MovieViewModel;
+import com.example.targil4.viewModels.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> movies = new ArrayList<>();
+    private List<Movie> movies;
     private Context context;
-    private MovieViewModel movieViewModel;
-
+    private String userToken;
     // default constructor
-    public MovieAdapter(Context context, MovieViewModel movieViewModel) {
+    public MovieAdapter(Context context, List<Movie> movies, String userToken) {
         this.context = context;
-        this.movieViewModel = movieViewModel;
-
-        // update the movie list from the view model
-        movieViewModel.getHomePageMovies().observeForever(movies -> {
-                    this.movies = movies;
-                    notifyDataSetChanged();
-                }
-        );
+        this.movies = movies;
+        this.userToken = userToken;
     }
 
     @NonNull
@@ -49,9 +47,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
+        // add the movie path to the server url for call
+        String imageServerUrl = context.getString(R.string.BaseURL).concat(movie.getImageUrl());
+        Log.d("imageServerUrl",  imageServerUrl);
+
+        // add the token to the glide request
+        LazyHeaders headers = new LazyHeaders.Builder()
+                .addHeader("authorization", "Bearer " + userToken)
+                .build();
+
+        // create the glideUrl with the new headers
+        GlideUrl glideUrl = new GlideUrl(imageServerUrl, headers);
+
         // set movie details
         Glide.with(context)
-                .load(movie.getImageUrl())
+                .load(glideUrl)
                 .placeholder(R.drawable.movie_card_placeholder) // display while loading
                 .error(R.drawable.movie_card_placeholder) // display on error
                 .into(holder.moviePoster);

@@ -24,11 +24,14 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     private Context context;
     private List<Category> categories;
     private MovieViewModel movieViewModel;
+    private List<Movie> allMovies = new ArrayList<>();
+    private String userToken;
 
-    public CategoryAdapter(Context context, MovieViewModel movieViewModel) {
+    public CategoryAdapter(Context context, MovieViewModel movieViewModel, String userToken) {
         this.context = context;
         this.movieViewModel = movieViewModel;
         this.categories = Collections.emptyList();
+        this.userToken = userToken;
     }
 
     @NonNull
@@ -47,10 +50,28 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         // get the movie ids
         List<String> movieIds = category.getMovies();
 
-        // set the movies recycler view
-        MovieAdapter movieAdapter = new MovieAdapter(context, movieViewModel);
-        holder.moviesRecyclerView.setAdapter(movieAdapter);
-        holder.moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        // get the movies
+        List<Movie> movies = new ArrayList<>();
+        for (String movieId : movieIds) {
+            Movie movie = getMovieFromId(movieId);
+            if (movie != null) {
+                movies.add(movie);
+            }
+        }
+
+        if (holder.movieAdapter == null) {
+            holder.movieAdapter = new MovieAdapter(context, movies, userToken);
+            holder.moviesRecyclerView.setAdapter(holder.movieAdapter);
+            holder.moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        } else {
+            // If the adapter already exists, update its data
+            holder.movieAdapter.updateMovies(movies);
+        }
+
+//        // set the movies recycler view
+//        MovieAdapter movieAdapter = new MovieAdapter(context, movies);
+//        holder.moviesRecyclerView.setAdapter(movieAdapter);
+//        holder.moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     @Override
@@ -63,14 +84,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         notifyDataSetChanged(); // can be made more efficient by using specific change notifications
     }
 
+    public void updateMovies(List<Movie> newMovies) {
+        this.allMovies = newMovies;
+        notifyDataSetChanged(); // can be made more efficient by using specific change notifications
+    }
+
+    private Movie getMovieFromId(String movieId) {
+        for (Movie movie : allMovies) {
+            if (movie.get_id().equals(movieId)) {
+                return movie;
+            }
+        }
+        return null;
+    }
+
     public static class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
         RecyclerView moviesRecyclerView;
+        MovieAdapter movieAdapter;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
             categoryName = itemView.findViewById(R.id.category_name);
             moviesRecyclerView = itemView.findViewById(R.id.movies_recycler_view);
+        }
+
+        public void updateMovies(List<Movie> movies) {
+            if (movieAdapter != null) {
+                movieAdapter.updateMovies(movies);
+            }
         }
     }
 }

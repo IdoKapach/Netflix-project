@@ -17,6 +17,8 @@ services:
       - ./.env
     ports:
       - "${API_PORT}:${API_PORT}"
+    volumes:
+      - media_data:/usr/src/app/media
 
   recommend:
     build:
@@ -29,5 +31,6 @@ services:
       - user_data:/usr/targil3/user_data
 
 volumes:
-  mongo-data:
-  user_data:
+  mongo-data: # mongo
+  user_data: # recommender
+  media_data: # api media
