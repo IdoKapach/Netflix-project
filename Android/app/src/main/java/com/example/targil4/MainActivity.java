@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.VideoView;
+import android.net.Uri;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
