@@ -60,7 +60,7 @@ function LightMode() {
     }
   // render the lightControl button
   return (
-    <div className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <div className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle" style={{position: "absolute", zIndex: 9999}}>
       <button
         className="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
         id="bd-theme"
@@ -83,7 +83,7 @@ function LightMode() {
         <li>
           <button
             type="button"
-            className={`dropdown-item d-flex align-items-center${lActine}`}
+            className={`theme-b dropdown-item d-flex align-items-center${lActine}`}
             data-bs-theme-value="light"
             aria-pressed="true"
           >
@@ -96,7 +96,7 @@ function LightMode() {
         <li>
           <button
             type="button"
-            className={`dropdown-item d-flex align-items-center${dActive}`}
+            className={`theme-b dropdown-item d-flex align-items-center${dActive}`}
             data-bs-theme-value="dark"
             aria-pressed="false"
           >

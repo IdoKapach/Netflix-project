@@ -23,6 +23,14 @@
 .btn-primary:hover {
     background-color: #ce6b53;
 }
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+    color: var(--bs-btn-active-color);
+    background-color: #db7d65;
+    border-color: #db7d65;
+}
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #6c757d
+}
 #bd-theme {
     background-color: #db7d65;
 }
@@ -67,5 +75,18 @@
     height: 40%;
     margin-top: 5%;
     width: 10%
+}
+.img-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    height: auto;
+  }
+.accordion-button:not(.collapsed) {
+    color: #db7d65;
+}
+.theme-b.active, .theme-b:active {
+    background-color: #6c757d;
 }
 /* ff3333 */
