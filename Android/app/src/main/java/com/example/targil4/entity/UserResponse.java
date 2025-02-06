@@ -15,6 +15,7 @@ public class UserResponse {
     private String token;
     private String username;
     private boolean admin;
+    private boolean darkMode;
 
     public UserResponse(@NonNull String token) {
         this.token = token;
@@ -26,6 +27,7 @@ public class UserResponse {
             String role = jwt.getClaim("role").asString();
             this.admin = role.equals("admin");
             android.util.Log.d("createUser", "Admin?: " + admin + ", " + role);
+            this.darkMode = true;
         } catch (Exception e) {
             android.util.Log.d("createUser", "Invalid Token: " + e.getMessage());
         }
@@ -53,5 +55,13 @@ public class UserResponse {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isDarkMode() {
+        return darkMode;
+    }
+
+    public void setDarkMode(boolean darkMode) {
+        this.darkMode = darkMode;
     }
 }

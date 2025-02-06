@@ -50,6 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:textColor="@color/white"
             android:inputType="text"
             android:hint="@string/username"/>
 
@@ -75,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/signupButton"
-            android:textColor="@color/white"
+            android:textColor="@color/ButtonText"
             android:backgroundTint="@color/red"
             android:layout_gravity="center"
             />

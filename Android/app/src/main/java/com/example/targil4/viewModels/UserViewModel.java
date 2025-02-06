@@ -30,4 +30,20 @@ public class UserViewModel extends ViewModel {
     public void signOut() {
         userRepo.signOut();
     }
+
+    public String getToken() {
+        android.util.Log.d("Movies", "wanting Token too!");
+        return userRepo.getToken();
+    }
+
+    public boolean isAdmin() {
+        return userRepo.isAdmin();
+    }
+    public boolean isDarkMode() {
+        return userRepo.isDarkMode();
+    }
+
+    public void updateDarkMode() {
+        userRepo.UpdateDarkMode();
+    }
 }

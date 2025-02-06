@@ -4,10 +4,20 @@ const createUser = async (req, res) => {
     try {
         const username = req.body.username
         const password = req.body.password
-        const picture = req.body.picture
+        let picture = req.body.picture
+
+        console.log('username: got here', username)
+
+        if (picture === undefined) {
+            console.log('picture: was undefined (before)', picture)
+            picture = "default-media/default.png"
+            console.log('picture: was undefined', picture)
+        }
 
         // call the creation service
         const user = await createUserService(username, password, picture)
+
+        console.log('user: got here', user)
         // return the user with success status
         return res.status(201).json(user)
     } catch (e) {

@@ -4,109 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/black">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add New Movie"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutMovieTitle"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/movie_title"
-            android:textColorHint="#8A8888"
-            app:boxStrokeColor="@color/red"
-            app:hintTextColor="@color/red">
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@color/red"
+            app:tabIndicatorColor="@color/red"
+            app:tabRippleColor="@color/red"
+            app:tabTextColor="@color/white"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextMovieTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:textColor="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutMovieDescription"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Movie Description"
-            android:textColorHint="#8A8888"
-            app:boxStrokeColor="@color/red"
-            app:hintTextColor="@color/red">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextMovieDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:minLines="3"
-                android:textColor="@color/white" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <Button
-                    android:id="@+id/buttonSelectFile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Video"
-                    android:textColor="@color/white"
-                    android:backgroundTint="@android:color/holo_red_light"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"/>
-
-                <Button
-                    android:id="@+id/buttonSelectImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/holo_red_light"
-                    android:text="Select Image"
-                    android:textColor="@color/white"
-                    android:padding="12dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_margin="4dp"/>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/buttonAddMovie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/red"
-                android:text="Add Movie"
-                android:textColor="@color/white"
-                android:padding="12dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_margin="4dp"
-                android:layout_gravity="center" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 </ScrollView>

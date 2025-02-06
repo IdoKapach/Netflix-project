@@ -64,6 +64,11 @@ public class UserRepository {
     }
 
     // calls room to delete its user data
+
+    public String getToken() {
+        android.util.Log.d("Movies", "getting Token!");
+        return dao.getLoggedInUser().getToken();
+    }
     public void signOut() {
         try {
             dao.clearUserData();
@@ -73,5 +78,16 @@ public class UserRepository {
         catch (Exception e) {
             return;
         }
+    }
+
+    public boolean isAdmin() {
+        return dao.getLoggedInUser().isAdmin();
+    }
+    public boolean isDarkMode() {
+        return dao.getLoggedInUser().isDarkMode();
+    }
+
+    public void UpdateDarkMode() {
+        dao.updateDarkMode(!dao.getLoggedInUser().isDarkMode(), dao.getLoggedInUser().getUsername());
     }
 }

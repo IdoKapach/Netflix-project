@@ -7,13 +7,11 @@ import { recommendRouter } from './routes/recommend.js'
 import { MovieRouter } from './routes/movie.js'
 import { QueryRouter } from './routes/query.js'
 import { authantication } from './controllers/authantication.js'
-import { UploadRouter } from './routes/Upload.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import path from 'path'
-import { fileURLToPath } from 'url';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = import.meta.dirname;
+console.log(__dirname);
 
 // load env variables
 dotenv.config()
@@ -38,10 +36,11 @@ app.use(express.json())
 // enable url-encoded body parsing
 app.use(express.urlencoded({extended:true}))
 
-// append static directory access
-app.use('/media', express.static(path.join(__dirname, 'media')));
-// add the upload routes under /upload route
-app.use('/upload', UploadRouter)
+// append static directory access (with auth middlewear)
+app.use('/media', 
+    authantication(),
+    express.static(path.join(__dirname, 'media')));
+
 // add the user routes under /api route
 app.use('/api', userRouter)
 // add the token route under /api route

@@ -1,6 +1,7 @@
 package com.example.targil4.adapters;// MovieAdapter.java
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,60 +9,61 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.example.targil4.MovieInfoPage;
 import com.example.targil4.R;
 import com.example.targil4.R;
 import com.example.targil4.entity.Movie;
+import com.example.targil4.viewModels.MovieViewModel;
+import com.example.targil4.viewModels.UserViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<Movie> movieList;
+    private List<Movie> movies;
     private Context context;
-    private boolean useContainer;
-
+    private String userToken;
     // default constructor
-    public MovieAdapter(Context context, List<Movie> movies) {
+    public MovieAdapter(Context context, List<Movie> movies, String userToken) {
         this.context = context;
-        this.movieList = movies;
-        this.useContainer = false;
-    }
-
-    // constructor with useContainer parameter
-    public MovieAdapter(Context context, List<Movie> movies, boolean useContainer) {
-        this.context = context;
-        this.movieList = movies;
-        this.useContainer = useContainer;
+        this.movies = movies;
+        this.userToken = userToken;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView;
-        if (useContainer) {
-            itemView = LayoutInflater.from(context).inflate(
-                    R.layout.item_movie_container,
-                    parent, false);
-        } else {
-            itemView = LayoutInflater.from(context).inflate(
-                    R.layout.item_movie,
-                    parent, false);
-        }
-        return new MovieViewHolder(itemView);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_movie, parent, false);
+        return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        Movie movie = movieList.get(position);
+        Movie movie = movies.get(position);
+        // add the movie path to the server url for call
+        String imageServerUrl = context.getString(R.string.BaseURL).concat(movie.getImageUrl());
+        Log.d("imageServerUrl",  imageServerUrl);
+
+        // add the token to the glide request
+        LazyHeaders headers = new LazyHeaders.Builder()
+                .addHeader("authorization", "Bearer " + userToken)
+                .build();
+
+        // create the glideUrl with the new headers
+        GlideUrl glideUrl = new GlideUrl(imageServerUrl, headers);
+
         // set movie details
         Glide.with(context)
-                .load(movie.getImageUrl())
-                .placeholder(R.drawable.movie_card_placeholder)
-                .error(R.drawable.movie_card_placeholder)
+                .load(glideUrl)
+                .placeholder(R.drawable.movie_card_placeholder) // display while loading
+                .error(R.drawable.movie_card_placeholder) // display on error
                 .into(holder.moviePoster);
         holder.movieTitle.setText(movie.getMovieName());
 
@@ -75,6 +77,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 intent.putExtra("movieBackdrop", movie.getImageUrl());
                 intent.putExtra("movieUrl", movie.getMovieUrl());
                 intent.putExtra("movieDescription", movie.getDescription());
+                intent.putExtra("movieId", movie.get_id());
                 context.startActivity(intent);
             }
         });
@@ -82,7 +85,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return movies.size();
+    }
+
+    public void updateMovies(List<Movie> newMovies) {
+        this.movies = newMovies;
+        notifyDataSetChanged();
     }
 
     // ViewHolder class for movie items

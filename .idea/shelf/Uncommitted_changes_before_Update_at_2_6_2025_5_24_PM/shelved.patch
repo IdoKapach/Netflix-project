@@ -1,0 +1,75 @@
+Index: Android/app/src/main/java/com/example/targil4/api/RecommenderAPI.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.targil4.api;\r\n\r\nimport android.util.Log;\r\n\r\nimport androidx.lifecycle.MutableLiveData;\r\n\r\nimport com.example.targil4.MyApplication;\r\nimport com.example.targil4.R;\r\nimport com.example.targil4.entity.Movie;\r\nimport com.example.targil4.viewModels.UserViewModel;\r\n\r\nimport java.util.List;\r\n\r\nimport retrofit2.Call;\r\nimport retrofit2.Callback;\r\nimport retrofit2.Response;\r\nimport retrofit2.Retrofit;\r\nimport retrofit2.converter.gson.GsonConverterFactory;\r\n\r\npublic class RecommenderAPI {\r\n    private Retrofit retrofit;\r\n    private WebServiceAPI webServiceAPI;\r\n    private UserViewModel userViewModel;\r\n    private String token;\r\n    private MutableLiveData<List<Movie>> recommendedLiveData;\r\n\r\n    public RecommenderAPI(MutableLiveData<List<Movie>> recommendedLiveData, UserViewModel userViewModel) {\r\n        retrofit = new Retrofit.Builder()\r\n                .baseUrl(MyApplication.context.getString(R.string.BaseURL).concat(\"api/\"))\r\n                .addConverterFactory(GsonConverterFactory.create())\r\n                .build();\r\n        webServiceAPI = retrofit.create(WebServiceAPI.class);\r\n        this.recommendedLiveData = recommendedLiveData;\r\n        this.userViewModel = userViewModel;\r\n        this.token = \"Bearer \" + userViewModel.getToken();\r\n    }\r\n\r\n    public void getRecommendations(String id) {\r\n        Call<List<Movie>> call = webServiceAPI.getRecommendations(token, id);\r\n        call.enqueue(new Callback<List<Movie>>() {\r\n            @Override\r\n            public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {\r\n                Log.e(\"Recommender\", \"got Response: \" + response.code() + \" \" + response.message());\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<List<Movie>> call, Throwable t) {\r\n                Log.e(\"Recommender\", \"Error recommending\", t);\r\n            }\r\n        });\r\n    }\r\n\r\n    public void watchedMovie(String id) {\r\n        Call<Void> call = webServiceAPI.watchedMovie(token, id);\r\n        call.enqueue(new Callback<Void>() {\r\n            @Override\r\n            public void onResponse(Call<Void> call, Response<Void> response) {\r\n                Log.e(\"Recommender\", \"got Response: \" + response.code() + \" \" + response.message());\r\n            }\r\n\r\n            @Override\r\n            public void onFailure(Call<Void> call, Throwable t) {\r\n                Log.e(\"Recommender\", \"Error recommending\", t);\r\n            }\r\n        });\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Android/app/src/main/java/com/example/targil4/api/RecommenderAPI.java b/Android/app/src/main/java/com/example/targil4/api/RecommenderAPI.java
+--- a/Android/app/src/main/java/com/example/targil4/api/RecommenderAPI.java	(revision a2b462dec29e0313e4e5d0a6151e7db4cba12dc7)
++++ b/Android/app/src/main/java/com/example/targil4/api/RecommenderAPI.java	(date 1738848665085)
+@@ -41,6 +41,7 @@
+             @Override
+             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
+                 Log.e("Recommender", "got Response: " + response.code() + " " + response.message());
++                recommendedLiveData.postValue(response.body());
+             }
+ 
+             @Override
+Index: Android/app/src/main/res/xml/network_security_config.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<network-security-config>\r\n    <domain-config cleartextTrafficPermitted=\"true\">\r\n        <domain includeSubdomains=\"true\">192.168.10.103</domain> <!-- or your server IP -->\r\n    </domain-config>\r\n</network-security-config>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Android/app/src/main/res/xml/network_security_config.xml b/Android/app/src/main/res/xml/network_security_config.xml
+--- a/Android/app/src/main/res/xml/network_security_config.xml	(revision a2b462dec29e0313e4e5d0a6151e7db4cba12dc7)
++++ b/Android/app/src/main/res/xml/network_security_config.xml	(date 1738789666001)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <network-security-config>
+     <domain-config cleartextTrafficPermitted="true">
+-        <domain includeSubdomains="true">192.168.10.103</domain> <!-- or your server IP -->
++        <domain includeSubdomains="true">172.20.10.7</domain> <!-- or your server IP -->
+     </domain-config>
+ </network-security-config>
+Index: Android/app/src/main/java/com/example/targil4/RegisteredMainpage.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.targil4;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.widget.Switch;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.appcompat.app.AppCompatDelegate;\r\nimport androidx.core.graphics.Insets;\r\nimport androidx.core.view.ViewCompat;\r\nimport androidx.core.view.WindowInsetsCompat;\r\nimport androidx.lifecycle.ViewModelProvider;\r\n\r\nimport com.example.targil4.viewModels.UserViewModel;\r\n\r\npublic class RegisteredMainpage extends AppCompatActivity {\r\n    private UserViewModel userViewModel;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.activity_registered_mainpage);\r\n\r\n        TextView signout = findViewById(R.id.SignOut);\r\n        signout.setOnClickListener(view -> {\r\n\r\n            userViewModel = new ViewModelProvider(this).get(UserViewModel.class);\r\n            userViewModel.signOut();\r\n            Intent intent = new Intent(this, UnregisteredMainpage.class);\r\n            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n            startActivity(intent);\r\n        });\r\n\r\n        TextView home = findViewById(R.id.Home);\r\n        home.setOnClickListener(view -> {\r\n            Intent intent = new Intent(this, RegisteredMainpage.class);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);\r\n            startActivity(intent);\r\n        });\r\n\r\n        Switch darkMode = findViewById(R.id.DarkMode);\r\n        darkMode.setOnClickListener(view -> {\r\n            int nightMode = AppCompatDelegate.getDefaultNightMode();\r\n            AppCompatDelegate.setDefaultNightMode(\r\n                    nightMode == AppCompatDelegate.MODE_NIGHT_YES ?\r\n                            AppCompatDelegate.MODE_NIGHT_NO :\r\n                            AppCompatDelegate.MODE_NIGHT_YES\r\n            );\r\n\r\n            Intent intent = new Intent(this, RegisteredMainpage.class);\r\n            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);\r\n            overridePendingTransition(0, 0);\r\n            startActivity(intent);\r\n        });\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Android/app/src/main/java/com/example/targil4/RegisteredMainpage.java b/Android/app/src/main/java/com/example/targil4/RegisteredMainpage.java
+--- a/Android/app/src/main/java/com/example/targil4/RegisteredMainpage.java	(revision a2b462dec29e0313e4e5d0a6151e7db4cba12dc7)
++++ b/Android/app/src/main/java/com/example/targil4/RegisteredMainpage.java	(date 1738789666026)
+@@ -13,6 +13,9 @@
+ import androidx.core.view.WindowInsetsCompat;
+ import androidx.lifecycle.ViewModelProvider;
+ 
++import com.example.targil4.entity.Category;
++import com.example.targil4.viewModels.CategoryViewModelFactory;
++import com.example.targil4.viewModels.RecommenderViewModel;
+ import com.example.targil4.viewModels.UserViewModel;
+ 
+ public class RegisteredMainpage extends AppCompatActivity {
+@@ -33,11 +36,16 @@
+             startActivity(intent);
+         });
+ 
++        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
++        CategoryViewModelFactory factory = new CategoryViewModelFactory(userViewModel);
++        RecommenderViewModel recommenderViewModel = new ViewModelProvider(this, factory).get(RecommenderViewModel.class);
+         TextView home = findViewById(R.id.Home);
+         home.setOnClickListener(view -> {
+-            Intent intent = new Intent(this, RegisteredMainpage.class);
++
++            recommenderViewModel.findRecommendations("0");
++            /*Intent intent = new Intent(this, RegisteredMainpage.class);
+             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+-            startActivity(intent);
++            startActivity(intent);*/
+         });
+ 
+         Switch darkMode = findViewById(R.id.DarkMode);

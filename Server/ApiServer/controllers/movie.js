@@ -1,14 +1,21 @@
 import movieServices from '../services/movie.js'
+import fs from 'fs';
+import path from 'path';
 
 // function that responsible to create movie given name, video and categories arguments. this func demands for user authantication
 const createMovie = async (req, res) => {
-    // tries to create the new movie
     try {
-        return res.json(await movieServices.createMovie(req.body.name, req.body.video, req.body.categories));
-    }
-    // it would fail if the name or video or categories weren't given or if the name is already in use by another movie
-    catch(e) {
-        return res.status(400).json({"errors" : e})
+        const title = req.body.title;
+        const videoPath = req.videoPath;
+        const imagePath = req.imagePath;
+        const categories = JSON.parse(req.body.categories);
+        const description = req.body.description;
+        
+        const newMovie = await movieServices.createMovie(title, videoPath, categories, imagePath, description);
+
+        return res.json(newMovie);
+    } catch(e) {
+        return res.status(400).json({errors : [e.message] })
     }
 };
 
@@ -17,7 +24,8 @@ const createMovie = async (req, res) => {
 const changeMovie = async (req, res) => {
     // tries to create the new movie
     try {
-        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories));
+        console.error("going fot it");
+        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories, req.body.image, req.body.description));
     }
     
     catch(e) {
@@ -25,6 +33,7 @@ const changeMovie = async (req, res) => {
         if (e[0] === 404) {
             return res.status(404).json({"error" : e[1]})
         }
+        console.error("error: ", e.message);
         // fail if the name or video or categories weren't given or if the name is already in use by another movie
         return res.status(400).json({"errors" : e})
     }
@@ -59,10 +68,13 @@ const getMovie = async (req, res) => {
 // get 20 movies from any promoted category and the 20 latest viewd movies
 const getMovies = async (req, res) => {
     try {
-        return res.status(200).json(await movieServices.getMovies(req.header('userId')))
+        console.log(`trying to get movies`)
+        console.log(req.user)
+        return res.status(200).json(await movieServices.getMovies(req.user))
     }
     // raise 404 error in case user not found
     catch(e) {
+        console.log(`no user`)
         return res.status(404).json({"error": "User not found"})
     }
 }

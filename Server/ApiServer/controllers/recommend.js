@@ -5,11 +5,16 @@ import { getUserService, updateUserService } from "../services/User.js";
 
 const getRecommend = async (req, res) => {
     const movie = req.params.id
-    const user = req.header('userId')
+    const user = req.user
     try {
         const recommends = await getRecommendService(user, movie)
         if (recommends) {
-            return res.status(200).json({ movies: recommends })
+            // convert the movie ids to movie objects
+            const movies = [];
+            for (var id of recommends) {
+                movies.push(await movieServices.getMovieById(id))
+            }
+            return res.status(200).json(movies)
         } else {
             return res.status(404).json({error: "Recommend not found"})
         }
@@ -20,17 +25,9 @@ const getRecommend = async (req, res) => {
 }
 
 const postRecommend = async (req, res) => {
-    // authenticate user header
-    try {
-        await authantication(req)
-    } catch (e) {
-        console.error("Authentication failed: ", e)
-        return res.status(400).json({ error: e })
-    }
-    
     // extract movie and user ids
     const movie = req.params.id
-    const user = req.header('userId')
+    const user = req.user
 
     // check if movie is in the api DB
     try {
@@ -53,7 +50,7 @@ const postRecommend = async (req, res) => {
 
     // iterate over the user movies to make sure the movie wasnt already watched
     for (var m of userDocument.movies) {
-        if (movie == m) {
+        if (movie == m.id) {
             console.error(`${movie} was already watched by ${user}`)
             return res.status(409).json({ error: 'Movie already watched by user' })
         }

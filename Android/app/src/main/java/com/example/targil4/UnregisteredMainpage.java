@@ -24,7 +24,7 @@ public class UnregisteredMainpage extends AppCompatActivity {
         hasToken.observe(this, loggedIn -> {
             android.util.Log.d("createUser", "ObservedSomething ");
             if (loggedIn) {
-                Intent intent = new Intent(this, RegisteredMainpage.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
