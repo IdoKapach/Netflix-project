@@ -34,7 +34,7 @@ const getNextId = async () => {
 }
 
 // function that responsible to create movie, given name, video and categories list arguments.
-const createMovie = async (name, video, categories, image) => {
+const createMovie = async (name, video, categories, image, description) => {
     // checks if all the fields are given
     let errors = []
     if (!name) {
@@ -52,6 +52,10 @@ const createMovie = async (name, video, categories, image) => {
     if (!image) {
         console.error("Image is required", e.message);
         errors.push("Image is required");
+    }
+    if (!description) {
+        console.error("Description is required", e.message);
+        errors.push("Description is required");
     }
     // checks if at least one of fields wasn't given
     if (errors.length) throw errors;
@@ -75,7 +79,7 @@ const createMovie = async (name, video, categories, image) => {
     // in case errors didn't occur, save the movie
     try {
         let id = await getNextId()
-        const movie = new Movie({ _id: id, name: name, video: video, image: image,  categories: categories });
+        const movie = new Movie({ _id: id, name: name, video: video, image: image,  categories: categories, description: description });
         await movie.save()
         // add the movie to all its' categories
         const movieId = movie._id.toString()
@@ -93,7 +97,7 @@ const createMovie = async (name, video, categories, image) => {
 };
 
 // function that responsible to change the movie that has movieId, given name, video and categories list arguments.
-const changeMovie = async (movieId, name, video, categories) => {
+const changeMovie = async (movieId, name, video, categories, description) => {
     let errors = []
     // checks if name has given
     if (name === undefined) {
@@ -110,11 +114,14 @@ const changeMovie = async (movieId, name, video, categories) => {
         errors.push("Categoris field is required")
         console.log("categories is required");
     }
+    if (description === undefined) {
+        errors.push("Description is required")
+        console.log("Description is required");
+    }
     // checks if at least one of fields wasn't given
     if (errors.length) {
         throw errors
     }
-    console.log("made it so far");
     // checking if all the categories exist and that there's an existing movie with movieId
     try{
         for (var catName of categories) {
@@ -144,6 +151,7 @@ const changeMovie = async (movieId, name, video, categories) => {
         movie.name = name
         movie.categories = categories
         movie.video = video
+        movie.description = description
         movie = await movie.save()
     }
     catch {
