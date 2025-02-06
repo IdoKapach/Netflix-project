@@ -38,6 +38,7 @@ public class MovieViewModel extends ViewModel {
     }
 
     public LiveData<List<Movie>> getHomePageMovies() {
+        movieRepo.getCategories();
         return movies;
     }
 

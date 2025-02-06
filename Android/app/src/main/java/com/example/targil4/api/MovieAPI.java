@@ -142,6 +142,7 @@ public class MovieAPI {
             public void onResponse(Call<Map<String, List<String>>> call, Response<Map<String, List<String>>> response) {
                 Log.e("Movies", "getMovies (plural) - got the Respond! " + response.code());
                 if (response.isSuccessful()) {
+                    categoryDao.clearCategoryData();
                     Log.e("Movies", "response successful!");
                     Map<String, List<String>> moviesMap = response.body();
 
@@ -170,7 +171,9 @@ public class MovieAPI {
 
             @Override
             public void onFailure(Call<Map<String, List<String>>> call, Throwable t) {
-
+                Log.e("Movies", "got the Respond! " + t.getMessage());
+                categoryLiveData.postValue(categoryDao.getCategories());
+                moviesLiveData.postValue(moviedao.getAllMovies());
             }
         });
     }

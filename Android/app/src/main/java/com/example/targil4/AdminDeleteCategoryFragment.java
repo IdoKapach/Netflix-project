@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,8 +21,7 @@ import com.example.targil4.viewModels.UserViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminEditCategoryFragment extends Fragment {
-
+public class AdminDeleteCategoryFragment extends Fragment {
     private List<String> categories;
     private AutoCompleteTextView autoCompleteCategory;
     private CategoryViewModelFactory factory;
@@ -34,14 +31,11 @@ public class AdminEditCategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_edit_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_admin_delete_category, container, false);
 
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         factory = new CategoryViewModelFactory(userViewModel);
         CategoryViewModel categoryViewModel = new ViewModelProvider(this, factory).get(CategoryViewModel.class);
-
-        EditText editTextMovieTitle = view.findViewById(R.id.editTextMovieTitle);
-        Switch promoted = view.findViewById(R.id.switch1);
 
         autoCompleteCategory = view.findViewById(R.id.autoCompleteCategory);
 
@@ -53,7 +47,6 @@ public class AdminEditCategoryFragment extends Fragment {
             for (Category category : categoryList) {
                 categories.add(category.getName());
             }
-
             // Create an ArrayAdapter with the categories
             ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, categories);
 
@@ -64,32 +57,18 @@ public class AdminEditCategoryFragment extends Fragment {
 
         });
 
-
-
-
         Button buttonAddCategory = view.findViewById(R.id.buttonAddCategory);
         buttonAddCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = editTextMovieTitle.getText().toString();
-                boolean promote = promoted.isChecked();
-                if (name.isEmpty()) {
-                    editTextMovieTitle.setError("Title is required");
-                    return;
-                }
-
                 String oldCategoryName = autoCompleteCategory.getText().toString();
                 if (oldCategoryName.isEmpty()) {
                     autoCompleteCategory.setError("Category is required");
                     return;
                 }
                 Category newCategory = categoryViewModel.getCategoryByName(oldCategoryName);
-                newCategory.setName(name);
-                newCategory.setPromoted(promote);
-                categoryViewModel.editCategory(newCategory);
-                editTextMovieTitle.setText("");
+                categoryViewModel.deleteCategory(newCategory);
                 autoCompleteCategory.setText("");
-                promoted.setChecked(false);
             }
         });
 

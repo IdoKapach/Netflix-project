@@ -48,6 +48,13 @@ public class MovieRepository {
         protected void onActive() {
             android.util.Log.d("Categories", "on active activated");
             super.onActive();
+            new Thread(() -> {
+                try {
+                    List<Category> category = categoryDao.getCategories();
+                    android.util.Log.d("Movies", "categories here are: " + category.size());
+                    categoriesLiveData.postValue(category);
+                } catch (Exception e) {}
+            }).start();
         }
     }
 
