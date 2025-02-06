@@ -12,6 +12,7 @@ import { LoggedBar, UnLoggedBar } from "./components/Bars";
 import Bottom from "./components/Bottom";
 import LightMode from "./components/LightMode";
 import CategoryPage from "./CategoryPage"
+import NoFoundPage from "./NoFoundPage";
 
 const App = () => {
   // initiating token variable which indicates if user is logged in
@@ -61,7 +62,7 @@ const App = () => {
         {/* renders the login page */}
         <Route
           path="/login"
-          element= {<LoginPage handleLogin={handleLogin} onMLogin={handleMLogin} />}
+          element= {<LoginPage handleLogin={handleLogin} handleMlogin={handleMLogin} />}
         />
         {/* renders the sign-up page */}
         <Route
@@ -118,6 +119,11 @@ const App = () => {
             (<Navigate to="/login" />)
           }
         />
+        {/* renders the no-found page in any ohher case*/}
+        <Route
+          path="/*"
+          element= {<NoFoundPage />}
+        /> 
       </Routes>
       <Bottom />
     </BrowserRouter>

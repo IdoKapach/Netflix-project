@@ -44,11 +44,17 @@ function CategoryCarousel({token, category, movies, id}) {
                 {elements}
             </div>
             <button className="carousel-control-prev" type="button" data-bs-target={`#carouselExample${id}`} data-bs-slide="prev">
-                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span> */}
+                <img src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3e
+  %3cpath d='M11.707 1.5a1 1 0 0 0-1.414 0L3.293 8l7 7a1 1 0 0 0 1.414-1.414L5.414 8l6.293-6.293a1 1 0 0 0 0-1.414z'/%3e
+%3c/svg%3e" class="arrow-icon text-secondary" width="25" height="25" />
                 <span className="visually-hidden">Previous</span>
             </button>
             <button className="carousel-control-next" type="button" data-bs-target={`#carouselExample${id}`} data-bs-slide="next">
-                <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                {/* <span className="carousel-control-next-icon" aria-hidden="true"></span> */}
+                <img src="data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='currentColor'%3e
+  %3cpath d='M4.293 1.5a1 1 0 0 1 1.414 0L12.707 8l-7 7a1 1 0 0 1-1.414-1.414L10.586 8 4.293 2.707a1 1 0 0 1 0-1.414z'/%3e
+%3c/svg%3e" class="arrow-icon text-secondary" width="25" height="25" />
                 <span className="visually-hidden">Next</span>
             </button>
         </div>
