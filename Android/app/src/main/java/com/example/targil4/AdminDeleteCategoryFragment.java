@@ -16,9 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.targil4.entity.Category;
 import com.example.targil4.viewModels.CategoryViewModel;
 import com.example.targil4.viewModels.CategoryViewModelFactory;
-import com.example.targil4.viewModels.MovieViewModel;
 import com.example.targil4.viewModels.UserViewModel;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +36,8 @@ public class AdminDeleteCategoryFragment extends Fragment {
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         factory = new CategoryViewModelFactory(userViewModel);
         CategoryViewModel categoryViewModel = new ViewModelProvider(this, factory).get(CategoryViewModel.class);
-        MovieViewModel movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
 
         autoCompleteCategory = view.findViewById(R.id.autoCompleteCategory);
-        TextInputLayout categorySelect = view.findViewById(R.id.category);
 
         categories = new ArrayList<>();
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categoryList -> {

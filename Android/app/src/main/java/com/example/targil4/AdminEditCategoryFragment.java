@@ -18,9 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.targil4.entity.Category;
 import com.example.targil4.viewModels.CategoryViewModel;
 import com.example.targil4.viewModels.CategoryViewModelFactory;
-import com.example.targil4.viewModels.MovieViewModel;
 import com.example.targil4.viewModels.UserViewModel;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +39,11 @@ public class AdminEditCategoryFragment extends Fragment {
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         factory = new CategoryViewModelFactory(userViewModel);
         CategoryViewModel categoryViewModel = new ViewModelProvider(this, factory).get(CategoryViewModel.class);
-        MovieViewModel movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
 
         EditText editTextMovieTitle = view.findViewById(R.id.editTextMovieTitle);
         Switch promoted = view.findViewById(R.id.switch1);
 
         autoCompleteCategory = view.findViewById(R.id.autoCompleteCategory);
-        TextInputLayout categorySelect = view.findViewById(R.id.category);
 
         categories = new ArrayList<>();
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categoryList -> {
@@ -82,7 +78,6 @@ public class AdminEditCategoryFragment extends Fragment {
                     return;
                 }
 
-                List<String> movies = new ArrayList<>();
                 String oldCategoryName = autoCompleteCategory.getText().toString();
                 if (oldCategoryName.isEmpty()) {
                     autoCompleteCategory.setError("Category is required");

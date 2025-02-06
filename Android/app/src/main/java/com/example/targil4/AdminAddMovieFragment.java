@@ -1,6 +1,5 @@
 package com.example.targil4;
 
-import static com.example.targil4.MyApplication.context;
 
 import android.net.Uri;
 import android.os.Build;
@@ -9,13 +8,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -30,19 +26,15 @@ import com.example.targil4.entity.Category;
 import com.example.targil4.viewModels.CategoryViewModel;
 import com.example.targil4.viewModels.CategoryViewModelFactory;
 import com.example.targil4.viewModels.MovieViewModel;
-import com.example.targil4.viewModels.RecommenderViewModel;
 import com.example.targil4.viewModels.UserViewModel;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AdminAddMovieFragment extends Fragment {
 
     private EditText editTextMovieTitle;
     private EditText editTextMovieDescription;
-    private EditText editTextMovieCategory;
     private Button buttonAddMovie;
     private Button buttonSelectFile;
     private Button buttonSelectImage;
@@ -52,7 +44,6 @@ public class AdminAddMovieFragment extends Fragment {
     private CategoryViewModelFactory factory;
     private ActivityResultLauncher<PickVisualMediaRequest> videoPicker;
     private ActivityResultLauncher<PickVisualMediaRequest> imagePicker;
-    private ActivityResultLauncher<String[]> requestPermissionLauncher;
     private List<String> categories;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -112,7 +103,6 @@ public class AdminAddMovieFragment extends Fragment {
         });
 
         autoCompleteCategory = view.findViewById(R.id.autoCompleteCategory);
-        TextInputLayout categorySelect = view.findViewById(R.id.category);
 
         UserViewModel userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         factory = new CategoryViewModelFactory(userViewModel);

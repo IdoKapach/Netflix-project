@@ -171,7 +171,9 @@ public class MovieAPI {
 
             @Override
             public void onFailure(Call<Map<String, List<String>>> call, Throwable t) {
-
+                Log.e("Movies", "got the Respond! " + t.getMessage());
+                categoryLiveData.postValue(categoryDao.getCategories());
+                moviesLiveData.postValue(moviedao.getAllMovies());
             }
         });
     }

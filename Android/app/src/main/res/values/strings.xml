@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Kapach</string>
-    <string name="BaseURL">http://192.168.10.103:3000/</string>
+    <string name="BaseURL">http://172.20.10.7:3000/</string>
     <string name="noUsername">Username is required!</string>
     <string name="noPassword">Password is required!</string>
     <string name="loginFail">Username and Password are not Kapach Enough!</string>
@@ -25,4 +25,30 @@
     <string name="movie_title">Movie Title</string>
     <string name="admin">admin</string>
     <string name="category_name">category name</string>
+    <string name="add_movie_title">Add New Movie</string>
+    <string name="add_category_title">Add new Category</string>
+    <string name="edit_movie_title">Edit Existing Movie</string>
+    <string name="edit_category_title">Edit Existing Category</string>
+    <string name="delete_movie_title">Delete Existing Movie</string>
+    <string name="delete_category_title">Delete Existing Category</string>
+    <string name="add_movie_button">Add Movie</string>
+    <string name="add_category_button">Add Category</string>
+    <string name="edit_movie_button">Edit Movie</string>
+    <string name="edit_category_button">Edit Category</string>
+    <string name="delete_movie_button">Delete Movie</string>
+    <string name="delete_category_button">Delete Category</string>
+    <string name="movie_name_hint">Movie Title</string>
+    <string name="description_hint">Movie Description</string>
+    <string name="category_hint">Select Category</string>
+    <string name="video_hint">Select Video</string>
+    <string name="Image_hint">Select Image</string>
+    <string name="old_movie_name_hint">Title of Movie to Change</string>
+    <string name="new_movie_name_hint">New Movie Title</string>
+    <string name="new_description_hint">New Movie Description</string>
+    <string name="new_Category_hint">New Category</string>
+    <string name="promote_hint">Promote the Category?</string>
+    <string name="category_name_hint">Category Name</string>
+    <string name="New_category_name_hint">New Category Name</string>
+
+
 </resources>

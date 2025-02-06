@@ -2,7 +2,6 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -17,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Add New Category"
+            android:text="@string/delete_category_title"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -27,7 +26,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Select Category"
+            android:hint="@string/category_hint"
             android:layout_marginTop="16dp"
             android:textColorHint="#8A8888"
             android:inputType="text"
@@ -42,6 +41,7 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:paddingStart="15dp"
+                android:paddingEnd="15dp"
                 android:textColor="@color/white"
                 android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -60,7 +60,7 @@
                 android:layout_margin="4dp"
                 android:backgroundTint="@color/red"
                 android:padding="12dp"
-                android:text="Add Movie"
+                android:text="@string/delete_category_button"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
