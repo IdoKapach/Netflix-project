@@ -54,7 +54,7 @@
                 android:backgroundTint="@color/red"
                 android:padding="12dp"
                 android:text="@string/delete_movie_button"
-                android:textColor="@color/white"
+                android:textColor="@color/ButtonText"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>

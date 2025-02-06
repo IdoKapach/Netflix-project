@@ -39,4 +39,11 @@ public class UserViewModel extends ViewModel {
     public boolean isAdmin() {
         return userRepo.isAdmin();
     }
+    public boolean isDarkMode() {
+        return userRepo.isDarkMode();
+    }
+
+    public void updateDarkMode() {
+        userRepo.UpdateDarkMode();
+    }
 }

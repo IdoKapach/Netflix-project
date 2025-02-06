@@ -83,4 +83,11 @@ public class UserRepository {
     public boolean isAdmin() {
         return dao.getLoggedInUser().isAdmin();
     }
+    public boolean isDarkMode() {
+        return dao.getLoggedInUser().isDarkMode();
+    }
+
+    public void UpdateDarkMode() {
+        dao.updateDarkMode(!dao.getLoggedInUser().isDarkMode(), dao.getLoggedInUser().getUsername());
+    }
 }

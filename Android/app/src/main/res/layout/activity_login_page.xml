@@ -78,7 +78,7 @@
             android:id="@+id/LoginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/ButtonText"
             android:text="@string/loginButton"
             android:backgroundTint="@color/red"
             android:layout_gravity="center"/>

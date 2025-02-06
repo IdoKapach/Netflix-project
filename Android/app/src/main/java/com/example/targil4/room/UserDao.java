@@ -15,4 +15,7 @@ public interface UserDao {
 
     @Query("DELETE FROM UserResponse")
     void clearUserData();
+    @Query("UPDATE UserResponse SET DarkMode = :darkMode WHERE username = :username")
+    void updateDarkMode(boolean darkMode, String username);
+
 }

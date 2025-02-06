@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private MenuItem adminItem;
     private MaterialButton logoutButton;
+    private MaterialButton darkModeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize ViewModel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+
 
         // Set up Bottom Navigation
         bottomNav = findViewById(R.id.bottom_navigation);
@@ -75,12 +78,31 @@ public class MainActivity extends AppCompatActivity {
             adminItem.setVisible(false);
         }
 
+
+        if (userViewModel.isDarkMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         // add logout button
         logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(v -> {
             userViewModel.signOut();
             Intent intent = new Intent(MainActivity.this, UnregisteredMainpage.class);
             startActivity(intent);
+        });
+
+        darkModeButton = findViewById(R.id.DarkMode);
+        darkModeButton.setOnClickListener(v -> {
+            int nightMode = AppCompatDelegate.getDefaultNightMode();
+            AppCompatDelegate.setDefaultNightMode(
+                    nightMode == AppCompatDelegate.MODE_NIGHT_YES ?
+                            AppCompatDelegate.MODE_NIGHT_NO :
+                            AppCompatDelegate.MODE_NIGHT_YES
+            );
+            userViewModel.updateDarkMode();
         });
     }
 

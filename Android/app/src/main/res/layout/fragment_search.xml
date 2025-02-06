@@ -38,6 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search"
+            android:textColor="@color/ButtonText"
             android:backgroundTint="@color/kapach_red"
             android:layout_marginStart="8dp"/>
 
