@@ -24,13 +24,30 @@
             app:expandedTitleMarginStart="48dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/main_backdrop"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/featured_movie_poster"
-                app:layout_collapseMode="parallax" />
+                android:layout_height="match_parent">
+
+                <androidx.media3.ui.PlayerView
+                    android:id="@+id/backdrop_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax"
+                    app:resize_mode="fill" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/random_video_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="40dp"
+                    android:textColor="@color/black"
+                    android:alpha="0.75"
+                    android:backgroundTint="@color/kapach_red"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
