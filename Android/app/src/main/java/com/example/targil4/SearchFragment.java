@@ -15,14 +15,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.targil4.adapters.MovieAdapter;
-import com.example.targil4.entity.Movie;
-import com.example.targil4.entity.User;
 import com.example.targil4.viewModels.CategoryViewModelFactory;
 import com.example.targil4.viewModels.QueryViewModel;
 import com.example.targil4.viewModels.UserViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SearchFragment extends Fragment {
 
