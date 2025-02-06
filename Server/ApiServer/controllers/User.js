@@ -10,7 +10,7 @@ const createUser = async (req, res) => {
 
         if (picture === undefined) {
             console.log('picture: was undefined (before)', picture)
-            picture = "media/default.png"
+            picture = "default-media/default.png"
             console.log('picture: was undefined', picture)
         }
 
