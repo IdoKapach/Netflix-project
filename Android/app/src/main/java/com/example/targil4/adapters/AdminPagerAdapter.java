@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.targil4.AdminAddCategoryFragment;
 import com.example.targil4.AdminAddMovieFragment;
+import com.example.targil4.AdminDeleteCategoryFragment;
 import com.example.targil4.AdminEditCategoryFragment;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class AdminPagerAdapter extends FragmentStateAdapter {
                 new AdminAddMovieFragment(),
                 new AdminAddCategoryFragment(),
                 new AdminEditCategoryFragment(),
-                new AdminAddMovieFragment()
+                new AdminDeleteCategoryFragment()
         );
     }
 

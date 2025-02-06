@@ -50,6 +50,8 @@ public class AdminAddCategoryFragment extends Fragment {
                 List<String> movies = new ArrayList<>();
                 Category newCategory = new Category(name, movies, promote);
                 categoryViewModel.addCategory(newCategory);
+                editTextMovieTitle.setText("");
+                promoted.setChecked(false);
             }
         });
 

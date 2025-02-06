@@ -53,6 +53,7 @@ public class AdminAddMovieFragment extends Fragment {
     private ActivityResultLauncher<PickVisualMediaRequest> videoPicker;
     private ActivityResultLauncher<PickVisualMediaRequest> imagePicker;
     private ActivityResultLauncher<String[]> requestPermissionLauncher;
+    private List<String> categories;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -117,22 +118,26 @@ public class AdminAddMovieFragment extends Fragment {
         factory = new CategoryViewModelFactory(userViewModel);
         CategoryViewModel categoryViewModel = new ViewModelProvider(this, factory).get(CategoryViewModel.class);
 
-        List<String> categories = new ArrayList<String>();
+        categories = new ArrayList<>();
         categoryViewModel.getCategories().observe(getViewLifecycleOwner(), categoryList -> {
+
+            if (categoryList == null) return;
+            categories.clear();
             for (Category category : categoryList) {
                 categories.add(category.getName());
             }
+            // Create an ArrayAdapter with the categories
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, categories);
+
+            // Set the adapter to the AutoCompleteTextView
+            autoCompleteCategory.setAdapter(adapter);
+
+            autoCompleteCategory.setOnClickListener(v -> autoCompleteCategory.showDropDown());
+
         });
 
 
 
-        // Create an ArrayAdapter with the categories
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_dropdown_item_1line, categories);
-
-        // Set the adapter to the AutoCompleteTextView
-        autoCompleteCategory.setAdapter(adapter);
-
-        autoCompleteCategory.setOnClickListener(v -> autoCompleteCategory.showDropDown());
 
         return view;
     }
@@ -162,7 +167,7 @@ public class AdminAddMovieFragment extends Fragment {
             return;
         }
         if (movieCategory.isEmpty()) {
-            editTextMovieCategory.setError("Category is required");
+            autoCompleteCategory.setError("Category is required");
             return;
         }
 
@@ -170,6 +175,9 @@ public class AdminAddMovieFragment extends Fragment {
         categoriesList.add(movieCategory);
         MovieViewModel movieViewModel = new ViewModelProvider(this, factory).get(MovieViewModel.class);
         movieViewModel.addMovie(movieTitle, movieDescription, videoUri, imageUri, categoriesList);
+        editTextMovieTitle.setText("");
+        autoCompleteCategory.setText("");
+        editTextMovieDescription.setText("");
     }
     private void chooseVideo() {
         videoPicker.launch(new PickVisualMediaRequest.Builder()
