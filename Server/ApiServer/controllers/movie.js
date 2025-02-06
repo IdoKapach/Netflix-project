@@ -9,8 +9,9 @@ const createMovie = async (req, res) => {
         const videoPath = req.videoPath;
         const imagePath = req.imagePath;
         const categories = JSON.parse(req.body.categories);
+        const description = req.body.description;
         
-        const newMovie = await movieServices.createMovie(title, videoPath, categories, imagePath);
+        const newMovie = await movieServices.createMovie(title, videoPath, categories, imagePath, description);
 
         return res.json(newMovie);
     } catch(e) {
@@ -24,7 +25,7 @@ const changeMovie = async (req, res) => {
     // tries to create the new movie
     try {
         console.error("going fot it");
-        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories));
+        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories, req.body.image, req.body.description));
     }
     
     catch(e) {

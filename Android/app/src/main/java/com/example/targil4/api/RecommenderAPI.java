@@ -41,6 +41,7 @@ public class RecommenderAPI {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 Log.e("Recommender", "got Response: " + response.code() + " " + response.message());
+                recommendedLiveData.postValue(response.body());
             }
 
             @Override
