@@ -42,7 +42,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const fileUpload = (req, res, next) => {
+const movieUpload = (req, res, next) => {
     console.log('fileUpload middleware started');
 
 
@@ -59,4 +59,4 @@ const fileUpload = (req, res, next) => {
     });
 };
 
-export default fileUpload;
+export default movieUpload;

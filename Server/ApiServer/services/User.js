@@ -33,11 +33,13 @@ const getNextId = async () => {
 const createUserService = async (username, password, picture) => {
     try {
         const nextId = await getNextId() // generate the next ID
+        console.log('nextId: ', nextId)
         const user = new User({
             _id: nextId,
             username: username,
             password: password,
         });
+        console.log('user: ', user)
         // set the picture if one was provided
         if (picture) user.picture = picture
         // save the user to mongoDB
