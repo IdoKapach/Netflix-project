@@ -2,23 +2,23 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // render button that's logs the user out and navigate to /login 
-function LogoutButton({ setToken, setMToken }) {
+function LogoutButton({ setToken, setMToken, handleLogout }) {
   const navigate = useNavigate()
   // func that updates the token when the user logout
-  const handleLogout = () => {
-    console.log("inside");
+  // const handleLogout = () => {
+  //   console.log("inside");
 
-    // clear tokens from state
-    setToken(null);
-    setMToken(null)
+  //   // clear tokens from state
+  //   setToken(null);
+  //   setMToken(null)
 
-    // remove tokens localStorage
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("mToken");
+  //   // remove tokens localStorage
+  //   localStorage.removeItem("token"); 
+  //   localStorage.removeItem("mToken");
 
-    // navigate to login
-    navigate("/login")
-  }
+  //   // navigate to login
+  //   navigate("/login")
+  // }
   // return the button
   return <button class="nav-link active" aria-current="page" onClick={handleLogout}>Logout</button>
 }
@@ -76,9 +76,9 @@ const Categories = () => {
   )
 }
 // render the bar for logged user
-function LoggedBar({token, mToken, setMToken, setToken}) {
+function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, handleLogout}) {
     // get user's name and image by api/users/:_id
-    let userName = "Ido"
+    let userName = nickname
     let userImage = "https://github.com/mdo.png"
 
 
@@ -105,7 +105,7 @@ function LoggedBar({token, mToken, setMToken, setToken}) {
                 <Categories />
               </li>
               <li class="nav-item">
-                <LogoutButton setMToken={setMToken} setToken={setToken}/>
+                <LogoutButton setMToken={setMToken} setToken={setToken} handleLogout={handleLogout}/>
               </li>
             </ul>
           </div>

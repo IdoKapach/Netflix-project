@@ -34,10 +34,13 @@ const createUserService = async (username, password, picture) => {
     try {
         const nextId = await getNextId() // generate the next ID
         console.log('nextId: ', nextId)
+        // setting that only the first registered user will be admin
+        let admin = nextId === "0" ? true : false
         const user = new User({
             _id: nextId,
             username: username,
             password: password,
+            admin: admin
         });
         console.log('user: ', user)
         // set the picture if one was provided

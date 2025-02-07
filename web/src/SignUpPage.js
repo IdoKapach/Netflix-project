@@ -1,17 +1,16 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { WarningAlert } from "./components/Alerts";
+import { signUp, getToken } from "./fetchRequests";
 
 // render the sign-up page
 function SignUpPage({handleLogin}) {
   const userR = useRef()
   const passwordR = useRef()
   const confirmR = useRef()
-  const nicknameR = useRef()
   const [uError, setUError] = useState("")
   const [pError, setPError] = useState("")
   const [cError, setCError] = useState("")
-  const [nError, setNError] = useState("")
   const [gError, setGError] = useState("")
   const [fError, setFError] = useState("")
 
@@ -44,7 +43,7 @@ function SignUpPage({handleLogin}) {
     formData.append("file", selectedFile);
     // trying upload the file
     try {
-      const res = await fetch("http://localhost:8777/upload", {
+      const res = await fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       });
@@ -73,7 +72,6 @@ function SignUpPage({handleLogin}) {
     let userName = userR.current.value.trim()
     let password = passwordR.current.value.trim()
     let confirmP = confirmR.current.value.trim()
-    let nickname = nicknameR.current.value.trim()
 
     // if one of the fields is empty, raise alert about it
     if (userName === "") {
@@ -99,12 +97,6 @@ function SignUpPage({handleLogin}) {
     }
     else {setCError("")}
 
-    if (nickname === "") {
-      setNError("Nickname box is empty")
-      error = true
-    }
-    else {setNError("")}
-
     // if one of the fields raised an alert, the func will stop at this point
     if (error) {
       console.log("error in one of the fileds")
@@ -120,13 +112,22 @@ function SignUpPage({handleLogin}) {
     }
     // send post request to api/users. in case it worked, calling to handleLogin.
     console.log("succsess in handleUpload: ", fileName)
-    
-
-
-
-
-    handleLogin("llkkj")
-    navigate('/')
+    const user = await signUp(userName, password, fileName, setGError)
+    // in case sign-up failed
+    if (user === null) {
+      console.log("sign-up failed")
+      return
+    }
+    console.log("sign-up succeeded")
+    // else, trying to login the new user
+    // send post request to api/tokens. in case it worked, calling to handleLogin.
+    const token = await getToken(userName, password, setGError)
+    console.log("token: ", token)
+    if (token !== null) {
+      handleLogin(token)
+      navigate('/')
+    }
+    console.log("login failed")
   }
 
   return (
@@ -152,11 +153,6 @@ function SignUpPage({handleLogin}) {
     <input type="password" ref={confirmR} class="form-control" id="floatingPasswordConfirm" placeholder="Password" fdprocessedid="6hoglo"/>
     <label for="floatingPasswordConfirm">Confirm password</label>
     {cError && <WarningAlert message={cError} />}
-  </div>
-  <div class="form-floating">
-    <input type="username" ref={nicknameR} class="form-control" id="floatingInputNickname" placeholder="name@example.com" fdprocessedid="k2b4s"/>
-    <label for="floatingInputNickname">Nickname</label>
-    {nError && <WarningAlert message={nError} />}
   </div>
 
   <div class="mb-3">
