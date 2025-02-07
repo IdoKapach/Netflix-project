@@ -9,8 +9,8 @@ services:
 
   api:
     build:
-      context: ./ApiServer
-      dockerfile: Dockerfile.Api
+      context: ../
+      dockerfile: Server/ApiServer/Dockerfile.Api
     depends_on:
       - mongo
     env_file:
