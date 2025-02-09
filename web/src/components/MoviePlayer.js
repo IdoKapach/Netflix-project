@@ -1,4 +1,8 @@
-function MoviePlayer({video, isHomePage = false}) {
+function MoviePlayer({video, isHomePage = false, token}) {
+    console.log("VIDEO:", video)
+    if (!video) {
+        return null
+    }
     if (isHomePage) {
         var width="640"
         var height="300"
@@ -10,7 +14,7 @@ function MoviePlayer({video, isHomePage = false}) {
     return (
         <div id="video-div">
         <video width={width} height={height} controls autoPlay={isHomePage} muted={isHomePage}>
-            <source src={`http://localhost:8777/media/${video}`} type="video/mp4" />
+            <source src={`http://localhost:3000/${video}?token=${token}`} type="video/mp4" />
         </video>
         </div>
     )

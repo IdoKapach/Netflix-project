@@ -133,7 +133,7 @@ const App = () => {
           path="/search/:query"
           element= {
             token ?
-            (<SearchPage />)
+            (<SearchPage token={token}/>)
              :
             (<Navigate to="/login" />)
           }

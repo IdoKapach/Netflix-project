@@ -12,7 +12,13 @@ const authantication = (requiredRole) => {
     const authHeader = req.header('authorization')
     // check if the header is empty and reads the second part of the header
     // example: Bearer 123456 (Bearer is usually the first part of the header)
-    const token = authHeader && authHeader.split(' ')[1]
+    let token = authHeader && authHeader.split(' ')[1]
+
+    // If no token in header, check the query parameter
+    if (!token) {
+        token = req.query.token
+    }
+
     // if the token is empty, return 401
     if (token == null) return res.sendStatus(401)
 

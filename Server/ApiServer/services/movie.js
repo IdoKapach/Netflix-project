@@ -35,6 +35,7 @@ const getNextId = async () => {
 
 // function that responsible to create movie, given name, video and categories list arguments.
 const createMovie = async (name, video, categories, image, description) => {
+    console.log("CREATE: 1:", name, "2:", video, "3:", categories, "4:", image, "5:", description)
     // checks if all the fields are given
     let errors = []
     if (!name) {

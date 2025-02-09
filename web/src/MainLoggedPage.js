@@ -2,11 +2,22 @@
 import MoviePlayer from "./components/MoviePlayer";
 import CategoryCarousel from "./components/CategoryCarousel";
 import categoriess from "./movies.json";
+import {useState, useEffect} from 'react'
+import { getCategories, getMovies, getMovie } from "./fetchRequests";
 
 // render the carusels of all the categories that return from the call to ex3
 function Carousels({token}) {
-    // get categoriees json by api/movies
-    let categories = categoriess
+    // get categoriees json by api/categories
+    // let categories = getCategories(token)
+    const [categories, setCategories] = useState({})
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const data = await getMovies(token);
+            setCategories(data);
+        };
+
+        fetchCategories();
+    }, [token]);
 
 
 
@@ -20,10 +31,43 @@ function Carousels({token}) {
 
 // render tye main page for the logged users
 function MainLoggedPage({token}) {
-    return (<div>
-        <MoviePlayer video={"1.mp4"} isHomePage={true} />
+    const [categories, setCategories] = useState({})
+    const [video, setVideo] = useState(null)
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const data = await getMovies(token);
+            setCategories(data);
+            
+            const keys = Object.keys(data).filter(key => 
+                Array.isArray(data[key]) && data[key].length > 0)
+            console.log("KEYS:", keys)
+            if (keys.length === 0) return // Handle empty object case
+
+            const randomKey = keys[Math.floor(Math.random() * keys.length)]; // Pick a random key
+            const movies = data[randomKey]
+            console.log("RANDOMKEY", randomKey)
+
+            if (!movies || movies.length === 0) return // Handle empty movie list
+
+            let movieId = movies[Math.floor(Math.random() * movies.length)];
+            console.log("movieId:", movieId)
+            // gets the video of the chosen movie
+            const res = await getMovie(token, movieId)
+            console.log("VIDEO PATH:", res.video)
+            setVideo(res.video)
+        };
+
+        fetchCategories();
+
+    }, [token]);
+
+
+    return (
+    <div>
+        <MoviePlayer video={video} isHomePage={true} token={token} />
         <Carousels token={token}/>
-    </div>);
+    </div>
+    );
 }
 
 export default MainLoggedPage;

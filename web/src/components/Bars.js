@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCategories } from "../fetchRequests";
+
 
 // render button that's logs the user out and navigate to /login 
 function LogoutButton({ setToken, setMToken, handleLogout }) {
@@ -61,12 +63,21 @@ function SearchForm() {
   );
 }
 
-const Categories = () => {
+const Categories = ({token}) => {
   // call api/categories ex3 in order to get all the categories
-  let categories=[
-    {"_id": 1, "name":"Action"}, {"_id": 2, "name":"Drama"}, {"_id": 3, "name":"Comedy"}, {"_id": 4, "name":"Horror"}
-  ]
+  // let categories=[
+  //   {"_id": 1, "name":"Action"}, {"_id": 2, "name":"Drama"}, {"_id": 3, "name":"Comedy"}, {"_id": 4, "name":"Horror"}
+  // ]
 
+  const [categories, setCategories] = useState([])
+  useEffect(() => {
+    const fetchCategories = async () => {
+        const data = await getCategories(token);
+        setCategories(data);
+    };
+
+    fetchCategories();
+}, [token]);
 
 
   return (
@@ -79,7 +90,7 @@ const Categories = () => {
 function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, handleLogout}) {
     // get user's name and image by api/users/:_id
     let userName = nickname
-    let userImage = "https://github.com/mdo.png"
+    // let userImage = await getImg(token, `http://localhost:3000/media/${profileImg}`)
 
 
 
@@ -91,18 +102,18 @@ function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, ha
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-              <li style={{paddingTop: "4%"}}>
+              <li style={{paddingTop: "3%"}}>
                 <h6 id="user-bar">Hello, {userName}!</h6>
               </li>
               <li id="circle-img">
-                <img src={userImage} alt="mdo" width="36" height="36" class="rounded-circle" />
+                <img src={`http://localhost:3000/media/${profileImg}?token=${token}`} alt="profile" width="36" height="36" class="rounded-circle" />
               </li>
               <Managment mToken={mToken}/>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categories
                 </a>
-                <Categories />
+                <Categories token={token}/>
               </li>
               <li class="nav-item">
                 <LogoutButton setMToken={setMToken} setToken={setToken} handleLogout={handleLogout}/>

@@ -1,11 +1,27 @@
 import MovieGrid from "./components/MovieGrid"
 import moviess from "./movies.json"
 import { useParams } from "react-router-dom";
-
+import { useState, useEffect } from "react";
+import { getQuery } from "./fetchRequests";
 // render the search page
 function SearchPage({token}) {
     const {query} = useParams()
-    // getting query results by calling api/query
+    // getting query results by calling api/movies/search/:query
+    const [moviesObj, setMovies] = useState([])
+    useEffect(() => {
+        
+        const fetchCategories = async () => {
+            // Correctly fetch all movies
+            // let movieArray = await Promise.all(
+            //     movies.map(async (movie) => await getMovie(token, movie))
+            // );
+            // setMovies(movieArray)
+            
+            console.log(await getQuery(token, query))
+        };
+
+        fetchCategories();
+    }, [token]);
 
     // getting itiratively the movies objects from theirs _id by calling api/movies/:_id
 
