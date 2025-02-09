@@ -25,7 +25,7 @@ const changeMovie = async (req, res) => {
     // tries to create the new movie
     try {
         console.error("going fot it");
-        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories, req.body.image, req.body.description));
+        return res.json(await movieServices.changeMovie(req.params.id, req.body.name, req.body.video, req.body.categories, req.body.description, req.body.image));
     }
     
     catch(e) {
