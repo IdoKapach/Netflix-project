@@ -1,15 +1,25 @@
-FROM node:latest
-
+# stage 1: build the react app
+FROM node:latest AS build
 WORKDIR /usr/src/app
-
-# copy both package.json and package-lock.json
-COPY package*.json ./
-
+# copy the package.json and package-lock.json
+COPY web/package*.json ./
 # install dependencies
-RUN npm install -y
+RUN npm install
+# copy the react app to the image
+COPY web/ .
+# build the react app
+RUN npm run build
 
+# stage 2: build the API server and copy the static files
+FROM node:latest
+WORKDIR /usr/src/app
+# copy both package.json and package-lock.json
+COPY Server/ApiServer/package*.json ./
+# install dependencies
+RUN npm install
 # copy the api code to the image
-COPY . .
-
+COPY Server/ApiServer/ .
+# copy the static files from the react app
+COPY --from=build /usr/src/app/build /usr/src/app/build
 # start the api server
 ENTRYPOINT ["npm", "start"]
