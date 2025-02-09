@@ -6,12 +6,12 @@ import { getQuery } from "./fetchRequests";
 // render the search page
 function SearchPage({token}) {
     const {query} = useParams()
-    // getting query results by calling api/movies/search/:query
+    
     const [movies, setMovies] = useState([])
     useEffect(() => {
         
         const fetchCategories = async () => {
-            
+            // getting query results by calling api/movies/search/:query
             const data = await getQuery(token, query)
             setMovies(data)
         };
@@ -19,11 +19,6 @@ function SearchPage({token}) {
         fetchCategories();
     }, [token, query]);
 
-    // getting itiratively the movies objects from theirs _id by calling api/movies/:_id
-
-
-
-    // let movies = moviess["Horror"]
     // in case there aren't results, rendering this page
     if (!movies || movies.length === 0) {
         return (

@@ -6,28 +6,30 @@ import { getMovie, getRecommends } from "./fetchRequests";
 import NoFoundPage from "./NoFoundPage";
 import { Link } from 'react-router-dom'
 
+// render the movie info page
 function MovieInfoPage({token}) {
     const {movieId} = useParams()
-    // gets the movie object by api/movies/:movieId
-    // let movie = moviess["Action"][0]
+    
     const [movie, setMovie] = useState(null)
     const [recoMovies, setRecommends] = useState([])
+
     useEffect(() => {
         const fetchCategories = async () => {
+            // gets the movie object by fetching api/movies/:movieId
             const data = await getMovie(token, movieId)
             console.log("movie:", data)
             setMovie(data)
+            // gets the recommends for the movie by calling api/movies/recommend/:movieId
             const recommends = await getRecommends(token, movieId)
             setRecommends(recommends)
         };
 
-        fetchCategories();
-    }, [token, movieId]);
+        fetchCategories()
+    }, [token, movieId])
 
 
-    // gets the recommended movies by api/movies/recommend/:movieId
-    // let recoMovies = moviess["Comedy"]
     console.log("reco:", recoMovies)
+    // render no-found-page in case movie wasn't found
     if (!movie) {
         return <NoFoundPage />
     }

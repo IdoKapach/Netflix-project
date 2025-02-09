@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 import {useState, useEffect} from 'react'
 import NoFoundPage from "../NoFoundPage";
 
+// rendr the movie player for the home page
 function PlayerHomePage({video, token}) {
     console.log("HOME: video:", video)
     var width="640"
@@ -24,6 +25,7 @@ function PlayerHomePage({video, token}) {
     )
 }
 
+// render the movie player for the movie-player screen
 function PlayerScreen() {
     const {movieId} = useParams()
     const [videoPath, setVideo] = useState("")
@@ -38,6 +40,7 @@ function PlayerScreen() {
     useEffect(() => {
         console.log("DESTROY")
         const fetchCategories = async () => {
+            // get the movie element that correspond to the movieId
             const data = await getMovie(token, movieId)
             console.log("movie:", data)
             if (data){
@@ -68,6 +71,7 @@ function PlayerScreen() {
 
 }
 
+// render the movie player
 function MoviePlayer({video = "", isHomePage = false, token}) {
     console.log("GENERAL: video:", video)
     if (isHomePage === true) {

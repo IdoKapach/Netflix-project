@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+// render the movie card
 function MovieCard({_id, name, categories, image, video, token}) {
     // console.log("card:", _id, name, categories, image, video)
     // console.log("path:", `http://localhost:3000/${image}`)
