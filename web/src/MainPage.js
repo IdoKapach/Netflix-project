@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function MainPage() {
     return (<div>
         <div class="container col-xxl-8 px-4 py-5">
@@ -9,8 +11,8 @@ function MainPage() {
         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Welcome to Netflix!</h1>
         <p class="lead">The best movie site there is. Perfect site for perfect people. If you want to join the family you are welcome to click on one of the buttons bellow!</p>
         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-          <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" fdprocessedid="reiozm" href="/sign-up">Sign-up</a>
-          <a type="button" class="btn btn-outline-secondary btn-lg px-4" fdprocessedid="imlkv" href="/login">Login</a>
+          <Link type="button" class="btn btn-primary btn-lg px-4 me-md-2" fdprocessedid="reiozm" to="/sign-up">Sign-up</Link>
+          <Link type="button" class="btn btn-outline-secondary btn-lg px-4" fdprocessedid="imlkv" to="/login">Login</Link>
         </div>
       </div>
     </div>

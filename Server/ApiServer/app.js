@@ -58,6 +58,9 @@ app.use('/api/movies', MovieRouter)
 // add the query route under /api/movies/search route
 app.use('/api/movies/search', QueryRouter)
 
+// serve the react app on the root route
+app.use(express.static(path.join(__dirname, '/build')));
+
 // read PORT from .env (default to 3000)
 const PORT = process.env.API_PORT || 3000
 
