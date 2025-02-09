@@ -8,7 +8,7 @@ const rootFolder = path.join(import.meta.dirname, '../media/movies');
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         // save videos under 'videos' and images under 'images'
-        console.log("MULTER: video:", req.videoPath, "img:", req.imagePath)
+        console.log("MULTER: video:", req.body.videoPath, "img:", req.body.imagePath)
         let destFolder;
         // check subir and path for video files
         if (file.fieldname === 'videoFile') {
@@ -45,7 +45,7 @@ const upload = multer({ storage });
 
 const movieUpload = (req, res, next) => {
     console.log('fileUpload middleware started');
-    console.log("MULTER: video:", req.videoPath, "img:", req.imagePath)
+    console.log("MULTER: video:", req.imagePath, "img:", req.body.imagePath)
 
     upload.fields([
         { name: 'videoFile', maxCount: 1 },

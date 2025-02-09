@@ -23,7 +23,7 @@ function MoviesRow({token, movies, movieInx, x }) {
 }
 // render carousel of movies from the category category 
 function CategoryCarousel({token, category, movies, id}) {
-    // console.log("ARGS category carusele:", category, movies, id)
+    console.log("ARGS category carusele:", category, movies, id)
     // movies list of _id need to convert it to list of movies object by calling api/movie/_id ex3
     const [moviesObj, setMovies] = useState([])
     useEffect(() => {
@@ -33,11 +33,12 @@ function CategoryCarousel({token, category, movies, id}) {
             let movieArray = await Promise.all(
                 movies.map(async (movie) => await getMovie(token, movie))
             );
+            console.log("movieARRAY:", movieArray)
             setMovies(movieArray)
         };
 
         fetchCategories();
-    }, [token]);
+    }, [token, movies]);
 
     let movieInx = 0;
     // check if list is empty

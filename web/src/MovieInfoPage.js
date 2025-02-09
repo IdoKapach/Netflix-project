@@ -30,6 +30,9 @@ function MovieInfoPage({token}) {
     if (!movie) {
         return <NoFoundPage />
     }
+    if (!recoMovies) {
+        console.log("")
+    }
 
 
     return (
@@ -45,7 +48,7 @@ function MovieInfoPage({token}) {
                 </div>
             </div>
         </div>
-        {recoMovies ? <CategoryCarousel token={token} category={"Recommends"} movies={recoMovies} id={0} /> : null}
+        {recoMovies ? <CategoryCarousel token={token} category={"Recommends"} movies={recoMovies.map((movie) => movie._id)} id={0} /> : null}
     </div>
 )
 }

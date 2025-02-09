@@ -371,31 +371,66 @@ async function createMovie(token, name, categories, description, imgPath, videoP
   }
 }
 
-async function createMovie1(token, name, categories, description, imgPath, videoPath, setFError) {
+async function updateMovie(token,id, name, categories, description, imgPath, videoPath, setFError) {
+  const uploadMovie = async (videoFile, imageFile) => {
+    const formData = new FormData();
+    formData.append('videoFile', videoFile);
+    formData.append('imageFile', imageFile);
+
+    try {
+        const res = await fetch('http://localhost:3000/upload/movies', {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${token}` // Add token for authentication
+            },
+            body: formData
+        });
+
+        if (!res.ok) {
+            throw new Error(`Upload failed: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        console.log('Upload response:', data);
+        return data;
+    } catch (error) {
+        console.error('Upload failed:', error);
+        return { error: error.message };
+    }
+  };
+
+  let res1 = await uploadMovie(videoPath, imgPath);
+  if (res1.error) {
+    setFError(res1.error);
+    return false;
+  }
+
+  videoPath = res1.videoPath
+  imgPath = res1.imagePath
+  console.log("AFTER: video:", videoPath, "img: ", imgPath)
+
   // trying to create movie
   try {
     console.log("categories: ", JSON.stringify(categories))
-    // const formData = new FormData();
-    // formData.append('videoPath', videoPath);
-    // formData.append('imagePath', imgPath);
-    // formData.append('title', name);
-    // formData.append('categories', JSON.stringify(categories));
-    // formData.append('description', description);
-    const res = await fetch(`http://localhost:3000/api/movies`, {
-      method: "POST",
+    const formData = new FormData();
+    formData.append('video', videoPath);
+    formData.append('image', imgPath);
+    formData.append('name', name);
+    formData.append('categories', categories);
+    formData.append('description', description);
+    const res = await fetch(`http://localhost:3000/api/movies/${id}`, {
+      method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,  // Include the Bearer token
         "Content-Type": "application/json"
     },
       body: JSON.stringify({
-        title: name,
-        categories: JSON.stringify(categories),
+        name: name,
+        categories: categories,
         description: description,
-        videoPath: videoPath,
-        imagePath: imgPath
-    }),
-      "imagePath": JSON.stringify(imgPath),
-      "videoPath": JSON.stringify(videoPath),
+        video: videoPath,
+        image: imgPath
+    })
     });
     // if the request succeeded
     if (res.ok) {
@@ -590,6 +625,33 @@ async function watchMovie(token, movieId) {
   }
 }
 
+async function deleteMovie(token, movieId, setFError) {
+  // trying to delete the movie
+  try {
+    const res = await fetch(`http://localhost:3000/api/movies/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`,  // Include the Bearer token
+        "Content-Type": "application/json"
+      }
+    });
+    // if the request succeeded
+    if (res.ok) {
+      return true
+    }
+    // if the request failed, raising alert
+    else {
+      const error = await res.text()
+      console.error("fail cause: ", error)
+      setFError(error)
+      return false
+    }
+  } catch (e) {
+    console.error("delete:", e)
+    setFError(e)
+    return false
+  }
+}
 export {uploadFile, getToken, signUp, getUserImg, createCategory, getCategories, deleteCategory, updateCategory
-  , createMovie, getCategory, getMovie, getMovies, getQuery, getRecommends, watchMovie
+  , createMovie, updateMovie, deleteMovie, getCategory, getMovie, getMovies, getQuery, getRecommends, watchMovie
 }
