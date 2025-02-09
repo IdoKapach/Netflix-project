@@ -1,23 +1,79 @@
-function MoviePlayer({video, isHomePage = false, token}) {
-    console.log("VIDEO:", video)
-    if (!video) {
-        return null
-    }
-    if (isHomePage) {
-        var width="640"
-        var height="300"
-    }
-    else {
-        var width="1280"
-        var height="600"
-    }
+import {watchMovie, getMovie} from "../fetchRequests"
+import { useParams, useLocation } from "react-router-dom";
+import {useState, useEffect} from 'react'
+import NoFoundPage from "../NoFoundPage";
+
+function PlayerHomePage({video, token}) {
+    console.log("HOME: video:", token)
+    var width="640"
+    var height="300"
+    // if (video) {
+    //     console.log("enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+    //     return (
+    //         <NoFoundPage />
+    //     )
+    // }
     return (
         <div id="video-div">
-        <video width={width} height={height} controls autoPlay={isHomePage} muted={isHomePage}>
+        <video width={width} height={height} controls autoPlay={true} muted={true}>
             <source src={`http://localhost:3000/${video}?token=${token}`} type="video/mp4" />
         </video>
         </div>
     )
+}
+
+function PlayerScreen() {
+    const {movieId} = useParams()
+    const [videoPath, setVideo] = useState("")
+
+    console.log("DESTROY")
+
+    // extract token from query parameters
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get("token")
+
+    useEffect(() => {
+        console.log("DESTROY")
+        const fetchCategories = async () => {
+            const data = await getMovie(token, movieId)
+            console.log("movie:", data)
+            if (data){
+                setVideo(data.video)
+            }
+        };
+
+        fetchCategories();
+    }, [token, movieId]);
+
+    if (videoPath === "") {
+        return <NoFoundPage />
+    }
+    else {
+        watchMovie(token, movieId)
+    }
+
+    var width="1280"
+    var height="600"
+    
+    return (
+        <div id="video-div">
+        <video width={width} height={height} controls autoPlay={false} muted={false}>
+            <source src={`http://localhost:3000/${videoPath}?token=${token}`} type="video/mp4" />
+        </video>
+        </div>
+    )
+
+}
+
+function MoviePlayer({video = "", isHomePage = false, token}) {
+    console.log("GENERAL: video:", video)
+    if (isHomePage === true) {
+        return <PlayerHomePage video={video} token={token} />
+    }
+    else {
+        return <PlayerScreen />
+    }
 }
 
 export default MoviePlayer

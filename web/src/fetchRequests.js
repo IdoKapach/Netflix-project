@@ -504,7 +504,7 @@ async function getMovies(token) {
 }
 
 async function getQuery(token, query) {
-  // trying to get all the movies
+  // trying to get query results
   try {
     const res = await fetch(`http://localhost:3000/api/movies/search/${query}`, {
       method: "GET",
@@ -516,7 +516,7 @@ async function getQuery(token, query) {
     // if the request succeeded
     if (res.ok) {
       const data = await res.json()
-      // return all the ctegories
+      // return all the results
       console.log("query results: ", data)
       return data
     }
@@ -532,6 +532,64 @@ async function getQuery(token, query) {
   }
 }
 
+async function getRecommends(token, movieId) {
+  // trying to get all the movies
+  try {
+    const res = await fetch(`http://localhost:3000/api/movies/${movieId}/recommend`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,  // Include the Bearer token
+        "Content-Type": "application/json"
+      }
+    });
+    // if the request succeeded
+    if (res.ok) {
+      const data = await res.json()
+      // return all recommends
+      console.log("recommends: ", data)
+      return data
+    }
+    // if the request failed, raising alert
+    else {
+      const error = await res.text()
+      console.error("fail cause: ", error)
+      return null
+    }
+  } catch (e) {
+    console.error("recommends:", e)
+    return null
+  }
+}
+
+async function watchMovie(token, movieId) {
+  // trying to add the movie
+  try {
+    const res = await fetch(`http://localhost:3000/api/movies/${movieId}/recommend`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,  // Include the Bearer token
+        "Content-Type": "application/json"
+      }
+    });
+    // if the request succeeded
+    if (res.ok) {
+      const data = await res.json()
+      // return if the req succeeded
+      console.log("recommends: ", data)
+      return data
+    }
+    // if the request failed, raising alert
+    else {
+      const error = await res.text()
+      console.error("fail cause: ", error)
+      return null
+    }
+  } catch (e) {
+    console.error("recommends:", e)
+    return null
+  }
+}
+
 export {uploadFile, getToken, signUp, getUserImg, createCategory, getCategories, deleteCategory, updateCategory
-  , createMovie, getCategory, getMovie, getMovies, getQuery
+  , createMovie, getCategory, getMovie, getMovies, getQuery, getRecommends, watchMovie
 }
