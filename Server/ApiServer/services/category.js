@@ -53,6 +53,7 @@ const getCategories = async () => {
 // updates fields of exist category. 
 const updateCategory = async (id, name=null, promoted=null) => {
     let category = null
+    console.log("UODATE: services. name: ", name, "promoted: ", promoted)
     // searches for the category. returns an error in case it isn't exist
     try {
         category = await getCategoryById(id);

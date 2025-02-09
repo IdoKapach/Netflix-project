@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { WarningAlert } from "./components/Alerts";
+import { getToken } from "./fetchRequests";
 
 
 
@@ -14,7 +15,7 @@ function Form({handleLogin}) {
   const navigate = useNavigate()
 
   // the func that being activated in login attempt
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // gets the inputed username and password
     let userName = userR.current.value.trim()
@@ -34,14 +35,15 @@ function Form({handleLogin}) {
     }
     else {setPError("")}
 
-    // send post request to api/users/token. in case it worked, calling to handleLogin.
+    if (error) {return} 
 
-
-
-    if (error) {return}
-
-    handleLogin("llkkj")
-    navigate('/')
+    // send post request to api/tokens. in case it worked, calling to handleLogin.
+    const token = await getToken(userName, password, setGError)
+    console.log("token: ", token)
+    if (token !== null) {
+      handleLogin(token)
+      navigate('/')
+    } 
   }
 
   return (
@@ -69,8 +71,9 @@ function Form({handleLogin}) {
 </form>
   )
 }
+
 // render the login page
-function LoginPage({handleLogin, handleMlogin}) {
+function LoginPage({handleLogin}) {
   // handleLogin("jjjj")
   // handleMlogin("nfn")
   return (

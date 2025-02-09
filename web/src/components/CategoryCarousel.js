@@ -1,14 +1,20 @@
 import MovieCard from "./MovieCard";
+import { getMovie } from "../fetchRequests";
+import {useState, useEffect} from 'react'
 
 
 // render row of x movies: movie[movieInx] until movie[movieInx + x - 1]
-function MoviesRow({ movies, movieInx, x }) {
+function MoviesRow({token, movies, movieInx, x }) {
+    // console.log("ARGS movie row:", movieInx, movies, x)
+    if (movies.length === 0) {
+        return null
+    }
     return (
         <div className={`carousel-item${movieInx === 0 ? " active" : ""}`}>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
                 {Array.from({ length: x }, (_, i) => (
                     <div className="col" key={i}>
-                        <MovieCard {...movies[movieInx + i]} />
+                        <MovieCard {...movies[movieInx + i]} token={token} />
                     </div>
                 ))}
             </div>
@@ -17,21 +23,35 @@ function MoviesRow({ movies, movieInx, x }) {
 }
 // render carousel of movies from the category category 
 function CategoryCarousel({token, category, movies, id}) {
+    console.log("ARGS category carusele:", category, movies, id)
+    // movies list of _id need to convert it to list of movies object by calling api/movie/_id ex3
+    const [moviesObj, setMovies] = useState([])
+    useEffect(() => {
+        
+        const fetchCategories = async () => {
+            // Correctly fetch all movies
+            let movieArray = await Promise.all(
+                movies.map(async (movie) => await getMovie(token, movie))
+            );
+            console.log("movieARRAY:", movieArray)
+            setMovies(movieArray)
+        };
+
+        fetchCategories();
+    }, [token, movies]);
+
     let movieInx = 0;
     // check if list is empty
     if (movies.length === 0) {
         return (null);
     }
-    // movies list of _id need to convert it to list of movies object by calling api/movie/_id ex3
-
-
 
 
     // appending <moviesRow/> to elements itiratively
     const elements = [];
     while (movieInx < movies.length) {
         elements.push(
-            <MoviesRow movies={movies} x={Math.min(4, movies.length - movieInx)} movieInx={movieInx} />
+            <MoviesRow movies={moviesObj} x={Math.min(4, movies.length - movieInx)} movieInx={movieInx} token={token}/>
         )
         movieInx += 4; 
     }

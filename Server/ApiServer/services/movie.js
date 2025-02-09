@@ -35,6 +35,7 @@ const getNextId = async () => {
 
 // function that responsible to create movie, given name, video and categories list arguments.
 const createMovie = async (name, video, categories, image, description) => {
+    console.log("CREATE: 1:", name, "2:", video, "3:", categories, "4:", image, "5:", description)
     // checks if all the fields are given
     let errors = []
     if (!name) {
@@ -90,6 +91,7 @@ const createMovie = async (name, video, categories, image, description) => {
         }
 
         // return the movie - on success
+        console.log("The new movie: ", movie)
         return movie;
     } catch (e) {
         throw [e];
@@ -97,7 +99,7 @@ const createMovie = async (name, video, categories, image, description) => {
 };
 
 // function that responsible to change the movie that has movieId, given name, video and categories list arguments.
-const changeMovie = async (movieId, name, video, categories, description) => {
+const changeMovie = async (movieId, name, video, categories, image, description) => {
     let errors = []
     // checks if name has given
     if (name === undefined) {
@@ -152,6 +154,7 @@ const changeMovie = async (movieId, name, video, categories, description) => {
         movie.categories = categories
         movie.video = video
         movie.description = description
+        movie.image = image
         movie = await movie.save()
     }
     catch {

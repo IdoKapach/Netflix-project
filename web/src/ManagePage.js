@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WarningAlert, SuccessAlert } from "./components/Alerts";
-import { uploadFile } from "./fetchRequests";
+import { uploadFile, createCategory, deleteCategory, updateCategory, createMovie, getCategories, updateMovie, deleteMovie } from "./fetchRequests";
 
 function CategoryCreate({mToken}) {
     const [nError, setNError] = useState("")
@@ -28,7 +28,7 @@ function CategoryCreate({mToken}) {
     }, [])
 
     // func that's called by form in submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         let error = false
@@ -41,14 +41,19 @@ function CategoryCreate({mToken}) {
 
         if (error) {
             setSuccess("")
+            setGError("")
             console.log("name is empty")
             return
         }
 
         // calling post api/categories
-        console.log("success: ", promoted)
-        setSuccess("The category created")
-
+        console.log("all fields are fine: ", promoted)
+        let res = await createCategory(mToken, name, promoted, setGError)
+        if (res){
+          setGError("")
+          setSuccess("The category created")
+        }
+        else {setSuccess("")}
         setName("")
     }
 
@@ -107,7 +112,7 @@ function CategoryUpdate({mToken}) {
     }, [])
 
     // func that's called by form in submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         let error = false
@@ -130,11 +135,12 @@ function CategoryUpdate({mToken}) {
         }
 
         // calling patch api/categories/:id
-
-
-
-        console.log("success: ", promoted)
-        setSuccess("The category updated")
+        let res = await updateCategory(mToken, id, name, promoted, setGError)
+        if (res) {
+          console.log("success: ", promoted)
+          setSuccess("The category updated")
+          setGError("")
+        } else {setSuccess("")}
         setId("")
         setName("")
         setPromoted("")
@@ -194,7 +200,7 @@ function CateroryDelete({mToken}) {
     }, [])
 
     // func that's called by form in submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         let error = false
@@ -213,10 +219,13 @@ function CateroryDelete({mToken}) {
 
         // calling delete api/categories/:id
 
-
-
-        console.log("success")
-        setSuccess("The category was deleted")
+        let res = await deleteCategory(mToken, id, setGError)
+        if (res) {
+          console.log("success")
+          setSuccess("The category was deleted")
+          setGError("")
+        }
+        else {setSuccess("")}
         setId("")
     }
     return (
@@ -358,6 +367,18 @@ function MovieCreate({mToken, allCategories}) {
       error = true
     }
     else {setCError("")}
+    // if no img specified, raising alert
+    if (!selectedImg) {
+      setPError("No image was chosen")
+      error = true
+    }
+    else {setPError("")}
+    // if no video was specified, raising alert
+    if (!selectedVideo) {
+      setVError("No video was chosen")
+      error = true
+    }
+    else {setVError("")}
 
     // if one of the fields raised an alert, the func will stop at this point
     if (error) {
@@ -367,19 +388,24 @@ function MovieCreate({mToken, allCategories}) {
     }
     // else, it will try to upload the file specified in the file input
     console.log("all fields are fine. try to upload the image")
-    await handleUpload()
+    // await handleUpload()
     // if handleUpload raised an alert, the func will stop at this point
-    if (error) {
-      console.log("error in handleUpload")
-      setSuccess("")
-      return
-    }
+    // if (error) {
+    //   console.log("error in handleUpload")
+    //   setSuccess("")
+    //   return
+    // }
     // create a new movie by calling post req to api/movies
 
-
+    const res = await createMovie(mToken, name, categories, description, selectedImg, selectedVideo, setGError)
+    console.log("res: ", res)
+    if (res == true) {
+      setSuccess("The movie created")
+      setGError("")
+    }
     console.log("img: ", imgName)
     console.log("video: ", videoName)
-    setSuccess("The movie created")
+    
     setName("")
     setDescription("")
     setCategories([])
@@ -577,6 +603,18 @@ function MovieUpdate({mToken, allCategories}) {
       error = true
     }
     else {setCError("")}
+    // if no img specified, raising alert
+    if (!selectedImg) {
+      setPError("No image was chosen")
+      error = true
+    }
+    else {setPError("")}
+    // if no video was specified, raising alert
+    if (!selectedVideo) {
+      setVError("No video was chosen")
+      error = true
+    }
+    else {setVError("")}
 
     // if one of the fields raised an alert, the func will stop at this point
     if (error) {
@@ -586,20 +624,26 @@ function MovieUpdate({mToken, allCategories}) {
     }
     // else, it will try to upload the file specified in the file input
     console.log("all fields are fine. try to upload the image")
-    await handleUpload()
+    // await handleUpload()
     // if handleUpload raised an alert, the func will stop at this point
-    if (error) {
-      console.log("error in handleUpload")
-      setSuccess("")
-      return
-    }
+    // if (error) {
+    //   console.log("error in handleUpload")
+    //   setSuccess("")
+    //   return
+    // }
+
     // update he movie by calling in put req to api/movies/:id
 
-
+    const res = await updateMovie(mToken, id, name, categories, description, selectedImg, selectedVideo, setGError)
+    if (res == true) {
+      setSuccess("The movie updated")
+      setGError("")
+    }
+    else {setSuccess("")}
 
     console.log("img: ", imgName)
     console.log("video: ", videoName)
-    setSuccess("The movie updated")
+    
     setName("")
     setId("")
     setDescription("")
@@ -695,7 +739,7 @@ function MovieDelete({mToken}) {
     }, [])
 
   // func that's called by form in submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
       e.preventDefault()
 
       let error = false
@@ -713,11 +757,15 @@ function MovieDelete({mToken}) {
       }
 
       // calling delete api/movies/:id
-
-
-
-      console.log("success")
-      setSuccess("The movie was deleted")
+      const res = await deleteMovie(mToken, id)
+      if (res == true) {
+        setSuccess("The movie was deleted")
+        setGError("")
+        console.log("success")
+      }
+      else {
+        setSuccess("")
+      }
       setId("")
   }
   return (
@@ -737,7 +785,16 @@ function MovieDelete({mToken}) {
 }
 function ManagePage({mToken}) {
     // get all the categories
-    let allCategories = ["Action", "Comedy", "Drama", "Horror", "Advantures", "Kids"]
+    // let allCategories = ["Action", "Comedy", "Drama", "Horror", "Advantures", "Kids"]
+    const [allCategories, setCategories] = useState([])
+  useEffect(() => {
+    const fetchCategories = async () => {
+        const data = await getCategories(mToken);
+        setCategories(data.map(cat => cat.name))
+    };
+
+    fetchCategories();
+}, [mToken]);
 
 
 

@@ -6,6 +6,7 @@ import { CategoryRouter } from './routes/category.js'
 import { recommendRouter } from './routes/recommend.js'
 import { MovieRouter } from './routes/movie.js'
 import { QueryRouter } from './routes/query.js'
+import { UploadRouter } from './routes/Upload.js'
 import { authantication } from './controllers/authantication.js'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
@@ -40,6 +41,9 @@ app.use(express.urlencoded({extended:true}))
 app.use('/media', 
     authantication(),
     express.static(path.join(__dirname, 'media')));
+
+// add the upload routes under /upload route
+app.use('/upload', UploadRouter)
 
 // add the user routes under /api route
 app.use('/api', userRouter)

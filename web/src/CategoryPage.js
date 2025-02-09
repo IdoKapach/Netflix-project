@@ -1,11 +1,30 @@
 import { useParams } from "react-router-dom";
 import moviess from "./movies.json"
 import MovieGrid from "./components/MovieGrid";
+import { useState, useEffect } from "react";
+import { getCategory, getMovie } from "./fetchRequests";
 
 // render category page
 function CategoryPage({token}) {
     const {categoryId} = useParams()
     // getting movies _id list and category's name by calling to api/categories/:categoryId
+    const [category, setCategory] = useState()
+    const [categoryName, setName] = useState("")
+    const [movies, setMovies] = useState([])
+    useEffect(() => {
+        const fetchCategories = async () => {
+            const data = await getCategory(token, categoryId);
+            setCategory(data);
+            setName(data.name)
+            // Correctly fetch all movies
+            let movieArray = await Promise.all(
+                data.movies.map(async (movie) => await getMovie(token, movie))
+            );
+            setMovies(movieArray)
+        };
+
+        fetchCategories();
+    }, [token, categoryId]);
 
     // returning 404 in case category wasn't found
 
@@ -13,8 +32,8 @@ function CategoryPage({token}) {
 
 
 
-    let movies = moviess["Comedy"]
-    let categoryName = "Drama"
+    // let movies = moviess["Comedy"]
+    // let categoryName = "Drama"
     // in case there aren't movies that belongs to this category, rendering this page
     if (movies.length === 0) {
         return (
@@ -28,7 +47,7 @@ function CategoryPage({token}) {
     return (
     <div style={{margin: "5%"}}>
         <h1 style={{textAlign: "center"}}>{categoryName}</h1>
-        <MovieGrid movies={movies} />
+        <MovieGrid movies={movies} token={token} />
     </div>
 )
 }

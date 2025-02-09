@@ -1,24 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCategories } from "../fetchRequests";
+import { Link } from 'react-router-dom'
+
 
 // render button that's logs the user out and navigate to /login 
-function LogoutButton({ setToken, setMToken }) {
+function LogoutButton({ setToken, setMToken, handleLogout }) {
   const navigate = useNavigate()
   // func that updates the token when the user logout
-  const handleLogout = () => {
-    console.log("inside");
+  // const handleLogout = () => {
+  //   console.log("inside");
 
-    // clear tokens from state
-    setToken(null);
-    setMToken(null)
+  //   // clear tokens from state
+  //   setToken(null);
+  //   setMToken(null)
 
-    // remove tokens localStorage
-    localStorage.removeItem("token"); 
-    localStorage.removeItem("mToken");
+  //   // remove tokens localStorage
+  //   localStorage.removeItem("token"); 
+  //   localStorage.removeItem("mToken");
 
-    // navigate to login
-    navigate("/login")
-  }
+  //   // navigate to login
+  //   navigate("/login")
+  // }
   // return the button
   return <button class="nav-link active" aria-current="page" onClick={handleLogout}>Logout</button>
 }
@@ -27,7 +30,7 @@ function LogoutButton({ setToken, setMToken }) {
 const Managment = ({mToken}) => {
     return mToken ?
       (<li className="nav-item">
-        <a className="nav-link" href="/manage">Managment</a>
+        <Link className="nav-link" to="/manage">Managment</Link>
      </li>) : (null)
 }
 
@@ -61,51 +64,60 @@ function SearchForm() {
   );
 }
 
-const Categories = () => {
+const Categories = ({token}) => {
   // call api/categories ex3 in order to get all the categories
-  let categories=[
-    {"_id": 1, "name":"Action"}, {"_id": 2, "name":"Drama"}, {"_id": 3, "name":"Comedy"}, {"_id": 4, "name":"Horror"}
-  ]
+  // let categories=[
+  //   {"_id": 1, "name":"Action"}, {"_id": 2, "name":"Drama"}, {"_id": 3, "name":"Comedy"}, {"_id": 4, "name":"Horror"}
+  // ]
 
+  const [categories, setCategories] = useState([])
+  useEffect(() => {
+    const fetchCategories = async () => {
+        const data = await getCategories(token);
+        setCategories(data);
+    };
+
+    fetchCategories();
+}, [token]);
 
 
   return (
     <ul class="dropdown-menu">
-      {categories.map((category) => <li><a class="dropdown-item" href={`/category/${category._id}`}>{category.name}</a></li>)}
+      {categories.map((category) => <li><Link class="dropdown-item" to={`/category/${category._id}`}>{category.name}</Link></li>)}
     </ul>
   )
 }
 // render the bar for logged user
-function LoggedBar({token, mToken, setMToken, setToken}) {
+function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, handleLogout}) {
     // get user's name and image by api/users/:_id
-    let userName = "Ido"
-    let userImage = "https://github.com/mdo.png"
+    let userName = nickname
+    // let userImage = await getImg(token, `http://localhost:3000/media/${profileImg}`)
 
 
 
     return (<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/" >Netflix</a>
+          <Link class="navbar-brand" to="/" >Netflix</Link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-              <li style={{paddingTop: "4%"}}>
+              <li style={{paddingTop: "3%"}}>
                 <h6 id="user-bar">Hello, {userName}!</h6>
               </li>
               <li id="circle-img">
-                <img src={userImage} alt="mdo" width="36" height="36" class="rounded-circle" />
+                <img src={`http://localhost:3000/media/${profileImg}?token=${token}`} alt="profile" width="36" height="36" class="rounded-circle" />
               </li>
               <Managment mToken={mToken}/>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <Link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categories
-                </a>
-                <Categories />
+                </Link>
+                <Categories token={token}/>
               </li>
               <li class="nav-item">
-                <LogoutButton setMToken={setMToken} setToken={setToken}/>
+                <LogoutButton setMToken={setMToken} setToken={setToken} handleLogout={handleLogout}/>
               </li>
             </ul>
           </div>
@@ -132,14 +144,14 @@ function SignUpButton() {
 function UnLoggedBar() {
     return (<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/" >Netflix</a>
+        <Link class="navbar-brand" to="/" >Netflix</Link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           {/* <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <Link class="nav-link" to="#">Features</Link>
               </li>
             </ul>
           </div> */}

@@ -35,6 +35,7 @@ const getCategory = async (req, res) => {
 
 // updates fields of exist category. require authantication.
 const updateCategory = async (req, res) => {
+    console.log("UODATE: controller. name: ", req.body.name, "promoted: ", req.body.promoted)
     // tries to update the category which specified by it's Id
     try {
         await categoryService.updateCategory(req.params.id, req.body.name, req.body.promoted);

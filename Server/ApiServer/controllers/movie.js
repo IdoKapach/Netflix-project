@@ -6,8 +6,8 @@ import path from 'path';
 const createMovie = async (req, res) => {
     try {
         const title = req.body.title;
-        const videoPath = req.videoPath;
-        const imagePath = req.imagePath;
+        const videoPath = req.videoPath ? req.videoPath : req.body.videoPath;
+        const imagePath = req.imagePath ? req.imagePath : req.body.imagePath;
         const categories = JSON.parse(req.body.categories);
         const description = req.body.description;
         

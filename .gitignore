@@ -213,3 +213,5 @@ yarn-debug.log*
 yarn-error.log*
 
 Android/app/src/main/res/raw/sample_video.webm
+
+Server/ApiServer/media/*

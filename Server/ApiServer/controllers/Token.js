@@ -5,6 +5,7 @@ const getToken = async (req, res) => {
         // parse the creds from request body
         const username = req.body.username
         const password = req.body.password
+        console.log("in token: ", username, password)
         // call the token creation service
         const token = await getTokenService(username, password)
         console.log("Controller token: ", token)
