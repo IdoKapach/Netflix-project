@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCategories } from "../fetchRequests";
+import { Link } from 'react-router-dom'
 
 
 // render button that's logs the user out and navigate to /login 
@@ -29,7 +30,7 @@ function LogoutButton({ setToken, setMToken, handleLogout }) {
 const Managment = ({mToken}) => {
     return mToken ?
       (<li className="nav-item">
-        <a className="nav-link" href="/manage">Managment</a>
+        <Link className="nav-link" to="/manage">Managment</Link>
      </li>) : (null)
 }
 
@@ -82,7 +83,7 @@ const Categories = ({token}) => {
 
   return (
     <ul class="dropdown-menu">
-      {categories.map((category) => <li><a class="dropdown-item" href={`/category/${category._id}`}>{category.name}</a></li>)}
+      {categories.map((category) => <li><Link class="dropdown-item" to={`/category/${category._id}`}>{category.name}</Link></li>)}
     </ul>
   )
 }
@@ -96,7 +97,7 @@ function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, ha
 
     return (<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="/" >Netflix</a>
+          <Link class="navbar-brand" to="/" >Netflix</Link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -110,9 +111,9 @@ function LoggedBar({token, mToken, nickname, profileImg, setMToken, setToken, ha
               </li>
               <Managment mToken={mToken}/>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <Link class="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Categories
-                </a>
+                </Link>
                 <Categories token={token}/>
               </li>
               <li class="nav-item">
@@ -143,14 +144,14 @@ function SignUpButton() {
 function UnLoggedBar() {
     return (<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/" >Netflix</a>
+        <Link class="navbar-brand" to="/" >Netflix</Link>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           {/* <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <Link class="nav-link" to="#">Features</Link>
               </li>
             </ul>
           </div> */}
