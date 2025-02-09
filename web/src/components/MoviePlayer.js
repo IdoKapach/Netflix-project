@@ -4,15 +4,17 @@ import {useState, useEffect} from 'react'
 import NoFoundPage from "../NoFoundPage";
 
 function PlayerHomePage({video, token}) {
-    console.log("HOME: video:", token)
+    console.log("HOME: video:", video)
     var width="640"
     var height="300"
-    // if (video) {
-    //     console.log("enterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-    //     return (
-    //         <NoFoundPage />
-    //     )
-    // }
+
+    if (!video) {
+        console.log("error in playing the video")
+        return (
+            null
+        )
+    }
+
     return (
         <div id="video-div">
         <video width={width} height={height} controls autoPlay={true} muted={true}>
