@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function MovieCard({_id, name, categories, image, video, token}) {
     // console.log("card:", _id, name, categories, image, video)
     // console.log("path:", `http://localhost:3000/${image}`)
@@ -7,7 +9,7 @@ function MovieCard({_id, name, categories, image, video, token}) {
         <div class="card-body">
             <h5 class="card-title">{name}</h5>
             <p class="card-text">{categories.map(category => ` ${category} `)}</p>
-            <a href={`/movie-info/${_id}`} class="btn btn-primary">Movie's info</a>
+            <Link to={`/movie-info/${_id}`} class="btn btn-primary">Movie's info</Link>
         </div>
         </div>
     )

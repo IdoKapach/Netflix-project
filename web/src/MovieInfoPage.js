@@ -4,6 +4,7 @@ import CategoryCarousel from "./components/CategoryCarousel";
 import { useState, useEffect } from "react";
 import { getMovie, getRecommends } from "./fetchRequests";
 import NoFoundPage from "./NoFoundPage";
+import { Link } from 'react-router-dom'
 
 function MovieInfoPage({token}) {
     const {movieId} = useParams()
@@ -40,7 +41,7 @@ function MovieInfoPage({token}) {
         <div style={{ display: "flex", gap: "10%", alignItems: "center", justifyContent: "center", marginTop: "1.5%"}}>
             <img class="rounded" src={`http://localhost:3000/${movie.image}?token=${token}`} height={"350px"} width="auto" alt={`the image of ${movie.name}`} />
             <div style={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
-                <a href={`/movie-play/${movie._id}?token=${token}`} type="button" class="btn btn-primary btn-lg" style={{marginBottom: "10%"}}>Watch movie</a>
+                <Link to={`/movie-play/${movie._id}?token=${token}`} type="button" class="btn btn-primary btn-lg" style={{marginBottom: "10%"}}>Watch movie</Link>
                 <div class="card" style={{maxWidth: "40vw"}}>
                 <div class="card-body">
                     {movie.description}
