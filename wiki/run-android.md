@@ -11,12 +11,38 @@
 ### **make sure you're device is using the same network as the api server**
 
 ## Screenshots
-1. Register new user: ![](./screenshots//android-register.jpg)
-2. Login: ![](./screenshots/android-login.jpg)
-3. Home Page: ![](./screenshots/android-homepage.jpg)
-4. Movie Creation: ![](./screenshots/android-addmovie.jpg)  ![](./screenshots/android-movieadded.jpg)
-5. Movie Modification: ![](./screenshots/android-editmovie.jpg)  ![](./screenshots/android-movieedited.jpg)  ![](./screenshots/android-movieedited2.jpg)
-6. Movie Deletion: ![](./screenshots/android-deletemovie.jpg)  ![](./screenshots/android-moviedeleted.jpg)
-7. Movie watching: ![](./screenshots/android-moviewatch1.jpg) ![](./screenshots/android-moviewatch2.jpg)
-8. Movie Recommendation: ![](./screenshots/android-recommend-info.jpg)
-9. Movie Search: ![](./screenshots/android-search1.jpg)  ![](./screenshots/android-search2.jpg)  ![](./screenshots/android-search3.jpg)
+1. Register new user:  
+    <img src="./screenshots/android-register.jpg" width="200px" style="margin-right: 10px;">
+2. Login:  
+    <img src="./screenshots/android-login.jpg" width="200px" style="margin-right: 10px;">
+3. Home Page:  
+    <img src="./screenshots/android-homepage.jpg" width="200px" style="margin-right: 10px;">
+4. Movie Creation:  
+    <div style="display: flex;">
+        <img src="./screenshots/android-addmovie.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-movieadded.jpg" width="200px" style="margin-right: 10px;">
+    </div>
+5. Movie Modification:  
+    <div style="display: flex;">
+        <img src="./screenshots/android-editmovie.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-movieedited.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-movieedited2.jpg" width="200px" style="margin-right: 10px;">
+    </div>
+6. Movie Deletion:  
+    <div style="display: flex;">
+        <img src="./screenshots/android-deletemovie.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-moviedeleted.jpg" width="200px" style="margin-right: 10px;">
+    </div>
+7. Movie watching:  
+    <div style="display: flex;">
+        <img src="./screenshots/android-moviewatch1.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-moviewatch2.jpg" width="400px" style="margin-right: 10px;">
+    </div>
+8. Movie Recommendation:  
+    <img src="./screenshots/android-recommend-info.jpg" width="200px" style="margin-right: 10px;">
+9. Movie Search:  
+    <div style="display: flex;">
+        <img src="./screenshots/android-search1.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-search2.jpg" width="200px" style="margin-right: 10px;">
+        <img src="./screenshots/android-search3.jpg" width="200px" style="margin-right: 10px;">
+    </div>
