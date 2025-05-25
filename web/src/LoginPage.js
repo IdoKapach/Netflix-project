@@ -74,8 +74,6 @@ function Form({handleLogin}) {
 
 // render the login page
 function LoginPage({handleLogin}) {
-  // handleLogin("jjjj")
-  // handleMlogin("nfn")
   return (
       <div class="d-flex align-items-center py-4 bg-body-tertiary" id="login-cart">
   

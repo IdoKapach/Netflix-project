@@ -1,3 +1,4 @@
+// render the no found page
 function NoFoundPage() {
     let logoNum = Math.floor(Math.random() * 4);
     return (

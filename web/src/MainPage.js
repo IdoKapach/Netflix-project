@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 
+// render the main page for unlogged users
 function MainPage() {
     return (<div>
         <div class="container col-xxl-8 px-4 py-5">
