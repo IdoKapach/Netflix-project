@@ -99,7 +99,7 @@ const createMovie = async (name, video, categories, image, description) => {
 };
 
 // function that responsible to change the movie that has movieId, given name, video and categories list arguments.
-const changeMovie = async (movieId, name, video, categories, image, description) => {
+const changeMovie = async (movieId, name, video, categories, description, image) => {
     let errors = []
     // checks if name has given
     if (name === undefined) {
